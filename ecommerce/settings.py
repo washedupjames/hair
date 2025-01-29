@@ -1,26 +1,35 @@
+
+import os
+
+from pathlib import Path
+import environ
+env = environ.Env()
+
 import environ
 import os
 
 env = environ.Env()
-environ.Env.read_env()
-
-from pathlib import Path
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    env.read_env(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['hairgrow.onrender.com', '*']
+DEBUG = True
 
-CSRF_TRUSTED_ORIGINS =  ['https://hairgrow.onrender.com/']
+ALLOWED_HOSTS = ['*']
+
+#CSRF_TRUSTED_ORIGINS = ['']
 
 
 
@@ -41,7 +50,7 @@ INSTALLED_APPS = [
     'account', # Django app
 
     'payment', # Django app
-
+    
     'mathfilters',
 
     'crispy_forms', # Crispy forms
@@ -52,9 +61,18 @@ INSTALLED_APPS = [
 
 ]
 
+# To un-block PayPal popups - NB!
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+
+# Crispy forms
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-MIDDLEWARE = [
+
+MIDDLEWARE = [ 
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,9 +95,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'store.views.categories',
-
+                'store.views.categories', # Updated
                 'cart.context_processors.cart',
+
             ],
         },
     },
@@ -87,9 +105,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-'''
+
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+'''
 
 DATABASES = {
     'default': {
@@ -101,7 +121,7 @@ DATABASES = {
 '''
 
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,8 +138,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -129,15 +150,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Add this line to set the STATIC_ROOT
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 
@@ -146,28 +167,30 @@ MEDIA_ROOT = BASE_DIR / 'static/media'
 
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email configuration settings:
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = 'True'
 
-HOST_EMAIL = 'parkerman23@gmail.com'
+# Be sure to read the guide in the resources folder of this lecture (SETUP THE EMAIL BACKEND)
 
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
-# Allow Paypal popups
-SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+EMAIL_HOST_USER = '' # - Enter your GMAIL address # The host email that sends password reset emails
+EMAIL_HOST_PASSWORD = '' # - Enter your app password 
 
 
 
 
+# AWS configuration
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID') # - env('SECRET_KEY') Enter your AWS ACCESS KEY ID HERE
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID') # - Enter your AWS ACCESS KEY ID HERE
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY') # - Enter your AWS SECRET ACCESS KEY HERE
 
 
@@ -216,11 +239,15 @@ DATABASES = {
 
         'PASSWORD': env('DBPASSWORD'), # Enter your Database password HERE
 
-        'HOST': env('DB_HOST'),
+        'HOST': env('DB_HOST'), # Enter your Database host/endpoint HERE
 
         'PORT': '5432',
     }
 }
+
+
+
+
 
 
 
