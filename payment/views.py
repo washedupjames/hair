@@ -7,12 +7,12 @@ from decimal import Decimal
 from django_countries.fields import CountryField
 
 def checkout(request):
-    # First, create the cart object
+    # Define cart at the start of the function
     cart = Cart(request)
     subtotal = cart.get_total()
     
     context = {
-        'paypal_client_id': 'YOUR_PAYPAL_CLIENT_ID_HERE',  # Replace with your actual PayPal client ID
+        'paypal_client_id': settings.PAYPAL_CLIENT_ID,  # Use settings.PAYPAL_CLIENT_ID here
         'shipping_cost': '£0.00',
         'total_cost': None,
         'cart_total': subtotal,
@@ -20,6 +20,7 @@ def checkout(request):
     }
     
     return render(request, 'payment/checkout.html', context=context)
+
 
 def payment_success(request):
     # Clear shopping cart

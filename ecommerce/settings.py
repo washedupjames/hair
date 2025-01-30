@@ -9,6 +9,12 @@ import environ
 import os
 
 
+from dotenv import load_dotenv
+
+load_dotenv()  # Assuming your .env file is in the right place
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+
+
 
 env = environ.Env()
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
