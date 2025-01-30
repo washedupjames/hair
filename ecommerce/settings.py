@@ -8,6 +8,8 @@ env = environ.Env()
 import environ
 import os
 
+
+
 env = environ.Env()
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
@@ -181,8 +183,8 @@ EMAIL_USE_TLS = 'True'
 
 # Be sure to read the guide in the resources folder of this lecture (SETUP THE EMAIL BACKEND)
 
-EMAIL_HOST_USER = '' # - Enter your GMAIL address # The host email that sends password reset emails
-EMAIL_HOST_PASSWORD = '' # - Enter your app password 
+EMAIL_HOST_USER = env('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # - Enter your app password 
 
 
 
@@ -244,7 +246,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 
 
