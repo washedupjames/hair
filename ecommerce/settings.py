@@ -185,7 +185,7 @@ EMAIL_USE_TLS = 'True'
 
 EMAIL_HOST_USER = env('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # - Enter your app password 
-
+HOST_EMAIL = env('EMAIL_HOST_USER')
 
 
 

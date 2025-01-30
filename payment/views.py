@@ -6,21 +6,17 @@ from django.conf import settings
 from decimal import Decimal
 from django_countries.fields import CountryField
 
-from django.shortcuts import render
-from cart.cart import Cart
-from django_countries.fields import CountryField
-import os
-
 def checkout(request):
+    # First, create the cart object
     cart = Cart(request)
     subtotal = cart.get_total()
     
     context = {
-        'PAYPAL_CLIENT_ID': os.getenv('PAYPAL_CLIENT_ID'),
+        'paypal_client_id': 'YOUR_PAYPAL_CLIENT_ID_HERE',  # Replace with your actual PayPal client ID
         'shipping_cost': '£0.00',
         'total_cost': None,
         'cart_total': subtotal,
-        'COUNTRY_CHOICES': list(CountryField().choices)
+        'COUNTRY_CHOICES': list(CountryField().choices) 
     }
     
     return render(request, 'payment/checkout.html', context=context)
