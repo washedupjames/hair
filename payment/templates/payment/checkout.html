@@ -93,9 +93,9 @@
 
             <div id="paypal-button-container"></div>
 
-            <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
+            <script src="https://www.paypal.com/sdk/js?client-id={{ SANDBOX_PAYPAL_CLIENT_ID }}&currency=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
 
-            
+
         </form>
   
     </div>
@@ -144,9 +144,40 @@
             document.getElementById('country').value = ''; // Or set to 'GB' if you want UK as default
             updateShippingCost();
         });
+
+        // Function to check form validity, now using actions from PayPal
+        function checkFormValidity(actions) {
+            console.log('Checking form validity...');
+            var isFormValid = true;
     
-        // pay pal script
-        const paypalButtonsComponent = paypal.Buttons({
+            $(':input[required]').each(function(){
+                console.log('Checking:', this.id, $(this).val());
+                if($(this).val() === ''){
+                    console.log('Field', this.id, 'is empty');
+                    isFormValid = false;
+                }
+            });
+    
+            var countryValue = $('#country').val();
+            console.log('Country:', countryValue);
+            if (countryValue === '' || countryValue === null) {
+                console.log('Country not selected');
+                isFormValid = false;
+            }
+    
+            console.log('Form Validity:', isFormValid);
+
+            if (isFormValid) {
+                console.log('Enabling PayPal button');
+                actions.enable();
+            } else {
+                console.log('Disabling PayPal button');
+                actions.disable();
+            }
+        }
+    
+        // PayPal script
+        paypal.Buttons({
             // optional styling for buttons
             // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
             style: {
@@ -156,61 +187,31 @@
             },
     
             onInit: function(data, actions) {
-                actions.disable();
-    
-                // Complete order - NO SHIPPING
+                actions.disable(); // Start with the button disabled
+
+                // Add event listeners for form validation
+                document.getElementById('country').addEventListener('change', function() {
+                    updateShippingCost(); 
+                    checkFormValidity(actions);
+                });
+
                 document.querySelectorAll('.validate').forEach(item => {
-                    item.addEventListener('keyup', event => {
-                        //  The required fields are filled out
-                        var order_verified = 'Yes';
-    
-                        function checkInputs(){
-                            $(':input[required]').each(function(){
-                                if($(this).val() == ''){
-                                    // The required fields are empty
-                                    return order_verified = 'No';
-                                }
-                            });
-                            return order_verified;
-                        }
-    
-                        var isOrderVerified = checkInputs()
-    
-                        if(isOrderVerified === 'Yes') {
-                            actions.enable();
-                        } else {
-                            actions.disable();
-                        }
+                    if(item.tagName.toLowerCase() !== 'select') {
+                        item.addEventListener('keyup', function() {
+                            checkFormValidity(actions);
+                        });
+                    }
+                    item.addEventListener('change', function() {
+                        checkFormValidity(actions);
                     });
                 });
-    
-                // Complete order - WITH SHIPPING
-                //  The required fields are filled out
-                var order_verified = 'Yes';
-    
-                function checkInputs(){
-                    $(':input[required]').each(function(){
-                        if($(this).val() == ''){
-                            // The required fields are empty
-                            return order_verified = 'No';
-                        }
-                    });
-                    return order_verified;
-                }
-    
-                var isOrderVerified = checkInputs()
-    
-                if(isOrderVerified === 'Yes') {
-                    actions.enable();
-                } else {
-                    actions.disable();
-                }
+
+                // Initial check on page load
+                checkFormValidity(actions);
             },
     
             // set up the transaction
             createOrder: (data, actions) => {
-                // pass in any options from the v2 orders create call:
-                // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
                 const createOrderPayload = {
                     purchase_units: [
                         {
@@ -227,10 +228,8 @@
             // finalize the transaction
             onApprove: (data, actions) => {
                 const captureOrderHandler = (details) => {
-                    const payerName = details.payer.name.given_name;
                     console.log('Transaction completed');
-    
-                    // ajax functionality
+
                     $.ajax({
                         type: 'POST',
                         url: '{% url "complete-order" %}',
@@ -254,7 +253,7 @@
                         }
                     });
                 };
-    
+
                 return actions.order.capture().then(captureOrderHandler);
             },
     
@@ -262,16 +261,9 @@
             onError: (err) => {
                 console.error('An error prevented the buyer from checking out with PayPal');
             }
+        }).render("#paypal-button-container").catch((err) => {
+            console.error('PayPal Buttons failed to render', err);
         });
-    
-        paypalButtonsComponent
-            .render("#paypal-button-container")
-            .catch((err) => {
-                console.error('PayPal Buttons failed to render');
-            });
     </script>
-
-
-
 
 {% endblock %}

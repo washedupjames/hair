@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Assuming your .env file is in the right place
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+SANDBOX_PAYPAL_CLIENT_ID = os.getenv('SANDBOX_PAYPAL_CLIENT_ID')
 
 
 
