@@ -47,166 +47,91 @@
 
     
 
+    <style>
+        .navbar {
+            justify-content: flex-start;
+        }
+        .navbar-brand {
+            margin-left: auto;
+        }
+        .navbar-toggler {
+            margin-right: 15px;
+        }
 
-    <nav class="navbar navbar-expand-lg bg-light justify-content-center">
 
+        @media (max-width: 991.98px) {
+    .navbar .navbar-collapse {
+        margin-right: 60px; /* Adjust this value based on your cart button's width */
+    }
+    .cart-on-mobile {
+        position: absolute;
+        top: 15px; /* Adjust based on your navbar padding */
+        right: 15px;
+    }
+}
+        </style>
 
-        <a class="navbar-brand main-heading text-black" href="{% url 'store' %}"> 
-                
-        &nbsp; &nbsp; Afro Grow
         
-        </a>
-
-
-        <button
+        
+<nav class="navbar navbar-expand-lg bg-white">
+    <button
         class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavDropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown"
         aria-expanded="false"
-        aria-label="Toggle navigation">
-
+        aria-label="Toggle navigation"
+        style="margin-right: 15px;">
         <span class="navbar-toggler-icon"></span>
-
     </button>
-
     
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-                
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+    <a class="navbar-brand main-heading text-black" href="{% url 'store' %}" style="margin-left: 0;"> 
+        Afro Grow
+    </a>
 
-                <li class="nav-item dropdown">
-                    
-                    <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    
-                        Categories
-                    
-                    </a>
-                    
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                        <li>
-                            
-                            <a class="dropdown-item" href="{% url 'store' %}"> All </a>
-                        
-                        </li>
-                    
-                        {% for category in all_categories %}
-
-                        <li>
-
-                            <a class="dropdown-item" href="{{ category.get_absolute_url }}"> {{ category.name | capfirst }} </a>
-                        
-                        </li>
-
-                        {% endfor %}
-                    
-                    </ul>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
-            
-            <ul class="navbar-nav ms-auto">
-
-                {% if user.is_authenticated %}
-
-                    <li class="nav-item">
-                
-                        <a class="btn btn-alert navbar-btn text-black" type="button"  href="{% url 'dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Dashboard </a>
-
-                    </li>
-
-                {% else %}
-
-
-                    <li class="nav-item">
-                
-                        <a class="btn btn-alert navbar-btn text-black" type="button"  href="{% url 'register' %}"> Register </a>
-
-                    </li>
-
-                {% endif %}
-
-                {% if user.is_authenticated %}
-
-
-                    <li class="nav-item">
-
-                        <a class="btn btn-alert navbar-btn text-black" type="button"  href="{% url 'user-logout' %}"> <i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp; Logout </a>
-
-                    </li>
-
-                {% else %}
-
-
-                    <li class="nav-item">
-
-                        <a class="btn btn-alert navbar-btn text-black" type="button"  href="{% url 'my-login' %}"> Login </a>
-
-                    </li>
-
-                {% endif %}
-
-
-                &nbsp; &nbsp; &nbsp;
-
-
+    <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
                 <li class="nav-item">
-
-                    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary"> 
-                    
-
-
-                        <i class="fa fa-shopping-cart" aria-hidden="true"> </i>
-
-                        &nbsp;
-
-                        <div id="cart-qty" class="d-inline-flex">
-
-
-                            {% with qty_amount=cart|length %}
-
-                                {% if qty_amount > 0 %}
-
-                                    {{ qty_amount }}
-
-                                        {% else %}
-
-                                            0
-
-                                            {% endif %}
-
-
-
-
-                            {% endwith %}
-
-
-                        </div>
-
-
+                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
+                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
                     </a>
-
                 </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
+                </li>
+            {% endif %}
 
-                &nbsp; &nbsp; &nbsp;
-        
-
-            </ul>
-
-        
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    <!-- Cart outside of the collapsible menu -->
+    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-mobile" style="margin-left: 15px;"> 
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
+        <div id="cart-qty" class="d-inline-flex">
+            {% with qty_amount=cart|length %}
+                {% if qty_amount > 0 %}
+                    {{ qty_amount }}
+                {% else %}
+                    0
+                {% endif %}
+            {% endwith %}
         </div>
-
-
-    </nav>
+    </a>
+</nav>
 
 
     {% for message in messages %}
