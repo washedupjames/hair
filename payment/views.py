@@ -136,13 +136,18 @@ Address:
 {shipping_address}
 
 Products:
-{cart_items}<br><hr style="width:100%; border: 1px solid #000000; margin-top: 10px; margin-bottom: 10px;">
+{cart_items}
 
 
 
 
-Shipping Cost: £{shipping_cost}
-Total Paid: £{total_cost}'''
+Cart: £{cart_total}
+Shipping: £{shipping_cost}
+
+Total: £{total_cost}'''
+        send_mail(customer_email_subject, customer_email_body, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+        
+
         try:
             send_mail(host_email_subject, host_email_body, settings.EMAIL_HOST_USER, [settings.HOST_EMAIL], fail_silently=False)
         except Exception as e:
