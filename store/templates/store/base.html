@@ -47,15 +47,52 @@
 
     </head>
     <style>
-    /* Your existing styles here */
+        /* Existing styles */
+        
+        body {
+            margin: 0; /* Remove any default margin */
+            height: auto; /* Ensure body can grow to fit content */
+            background-color: #f8f9fa; /* Or whatever your page background should be when the image ends */
+        }
     
-    body {
-        background-image: url('{% static "media/images/Tracyart.jpg" %}');
-        background-repeat: repeat-y;
-        background-size: 100% auto;
-        background-attachment: fixed;
-    }
-</style>
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* This will stretch to viewport height */
+            background-image: url('{% static "media/images/Tracyart.jpg" %}');
+            background-repeat: no-repeat;
+            background-size: 100% auto; /* Full width, auto height */
+            background-attachment: fixed;
+            z-index: -1;
+            transform: translateY(var(--scroll-position, 0));
+        }
+    </style>
+    <script>
+        function updateBackground() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const bodyHeight = document.body.offsetHeight;
+            const imageHeight = document.body.getBoundingClientRect().height; // Assuming image height matches body height
+    
+            // Calculate the scroll position for the background
+            let bgScroll = -scrollPosition * 0.5; // Reverse scroll, adjust speed with 0.5
+    
+            // Ensure the background doesn't move past the image's top or bottom
+            if (scrollPosition + windowHeight >= bodyHeight) {
+                bgScroll = -(imageHeight - windowHeight); // When scrolled to the bottom, stop background at the bottom of the image
+            } else if (scrollPosition <= 0) {
+                bgScroll = 0; // When at the top, background should be at 0
+            }
+    
+            document.body.style.setProperty('--scroll-position', `${bgScroll}px`);
+        }
+    
+        // Update background on scroll
+        window.addEventListener('scroll', updateBackground);
+    </script>
     
 
     <style>
