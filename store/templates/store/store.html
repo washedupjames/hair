@@ -10,17 +10,36 @@
   }
 
   .centered-image {
-      text-align: center;  /* Center-align the image within its container */
+      text-align: center;
+      width: 100%; /* Ensure it takes full width of its container */
+      padding: 0 15px; /* Add some padding for smaller screens */
   }
+  
   .centered-image img {
-      display: inline-block;  /* Ensure the image behaves like an inline-block for centering */
+      display: inline-block;
+      max-width: 100%; /* This ensures the image doesn't exceed its container's width */
+      height: auto; /* Keeps aspect ratio */
+  }
+
+  /* For mobile devices */
+  @media (max-width: 767px) {
+      .centered-image img {
+          width: 100%; /* Full width on mobile */
+      }
+  }
+
+  /* For larger screens like laptops */
+  @media (min-width: 768px) {
+      .centered-image img {
+          max-width: 415px; /* Adjust this value to what you consider "reasonable" */
+      }
   }
 </style>
 
 <!-- Introduction section -->
 
 <div class="centered-image">
-    <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art" width="415" height="auto">
+    <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art">
 </div>
 
 <section class="py-4 text-center container">
