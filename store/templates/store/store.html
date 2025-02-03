@@ -2,34 +2,32 @@
 
 {% load static %}
 
-
 {% block content %}
 
 <style>
-
-
-  body{
-
+  body {
       background-color: rgb(215, 215, 215);
   }
 
-
+  .centered-image {
+      text-align: center;  /* Center-align the image within its container */
+  }
+  .centered-image img {
+      display: inline-block;  /* Ensure the image behaves like an inline-block for centering */
+  }
 </style>
-    <!-- Introduction section -->
 
+<!-- Introduction section -->
+
+<div class="centered-image">
     <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art" width="415" height="auto">
-  
-    <section class="py-4 text-center container">
+</div>
 
-     
-
-      
-         <!-- <iframe src="https://player.vimeo.com/video/824354781?background=1&autopause=0&player_id=0&app_id=58479" width="100%" height="352" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="IELTS on guitar" style="max-width: 100%; display: block; margin: 0 auto;"></iframe> -->
-
-        
-
+<section class="py-4 text-center container">
+    <!-- ... rest of your content ... -->
+</section>
     
-    </section>
+   
 
 
 
