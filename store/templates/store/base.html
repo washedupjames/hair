@@ -15,7 +15,7 @@
         
 
 
-	  <title> Afro Grow </title>
+      <title> Naturals </title>
 
 
 
@@ -56,18 +56,9 @@
         }
     
         body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%; /* This will stretch to viewport height */
+          
             background-image: url('{% static "media/images/Tracyart.jpg" %}');
-            background-repeat: no-repeat;
-            background-size: 100% auto; /* Full width, auto height */
-            background-attachment: fixed;
-            z-index: -1;
-            transform: translateY(var(--scroll-position, 0));
+          
         }
     </style>
     <script>
@@ -135,7 +126,7 @@
     </button>
     
     <a class="navbar-brand main-heading text-black" href="{% url 'store' %}" style="margin-left: 0;"> 
-        Afro Grow
+        Naturals
     </a>
 
     <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
