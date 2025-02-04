@@ -2,117 +2,132 @@
 
 <!DOCTYPE html>
 
-
-
 <html>
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <title> Naturals </title>
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-        <meta charset="utf-8"/>
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-        
-
-
-      <title> Naturals </title>
-
-
-
-        <!-- CSS -->
-        
-        <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        
-
-        <!-- JavaScript -->
-
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-
-
-	<!-- JavaScript Popper -->
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-	
-
-	 <!-- Bootstrap Max CDN --> 
-
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
-
-    </head>
     <style>
         /* Existing styles */
-        
         body {
-            margin: 0; /* Remove any default margin */
-            height: auto; /* Ensure body can grow to fit content */
-            background-color: #f8f9fa; /* Or whatever your page background should be when the image ends */
+            margin: 0; 
+            height: auto; 
+            background-color: #f8f9fa; 
         }
-    
-        body::before {
-          
-            background-image: url('{% static "media/images/Tracyart.jpg" %}');
-          
-        }
-    </style>
-    <script>
-        function updateBackground() {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const bodyHeight = document.body.offsetHeight;
-            const imageHeight = document.body.getBoundingClientRect().height; // Assuming image height matches body height
-    
-            // Calculate the scroll position for the background
-            let bgScroll = -scrollPosition * 0.5; // Reverse scroll, adjust speed with 0.5
-    
-            // Ensure the background doesn't move past the image's top or bottom
-            if (scrollPosition + windowHeight >= bodyHeight) {
-                bgScroll = -(imageHeight - windowHeight); // When scrolled to the bottom, stop background at the bottom of the image
-            } else if (scrollPosition <= 0) {
-                bgScroll = 0; // When at the top, background should be at 0
-            }
-    
-            document.body.style.setProperty('--scroll-position', `${bgScroll}px`);
-        }
-    
-        // Update background on scroll
-        window.addEventListener('scroll', updateBackground);
-    </script>
-    
 
-    <style>
+        body::before {
+            background-image: url('{% static "media/images/Tracyart.jpg" %}');
+        }
+
+        /* Updated navbar styles for centering */
         .navbar {
-            justify-content: flex-start;
+            padding: 0; /* Reset default padding */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
         }
         .navbar-brand {
-            margin-left: auto;
+            margin: 10px 0; /* Space above and below the brand */
         }
         .navbar-toggler {
-            margin-right: 15px;
+            order: 0; /* Place toggler at the top on mobile */
         }
 
+        /* Layout for nav items and cart */
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            justify-content: center; /* Center nav items */
+        }
+        .navbar-nav .nav-item {
+            margin: 0 5px; /* Space between nav items */
+        }
+        .navbar-nav .btn {
+            padding: 0.25rem 0.5rem; /* Reduce padding to fit more items */
+        }
 
+        /* Desktop cart positioning */
+        .cart-on-desktop {
+            position: absolute; /* Take out of normal document flow */
+            right: 15px; /* Push to the right edge */
+            top: 15px; /* Align with navbar height */
+            z-index: 1; /* Ensure it's above other content */
+        }
+
+        /* Mobile adjustments */
         @media (max-width: 991.98px) {
-    .navbar .navbar-collapse {
-        margin-right: 60px; /* Adjust this value based on your cart button's width */
-    }
-    .cart-on-mobile {
-        position: absolute;
-        top: 15px; /* Adjust based on your navbar padding */
-        right: 15px;
-    }
-}
-        </style>
+            .navbar .navbar-collapse {
+                margin-right: 0; /* No need for this on mobile */
+            }
+            .cart-on-mobile {
+                position: absolute; /* Position cart to the far right */
+                top: 15px; /* Adjust based on your navbar padding */
+                right: 15px; /* Far right of the screen */
+                z-index: 1; /* Ensure it's on top */
+            }
+            .navbar-nav {
+                flex-direction: column; /* Stack items vertically on mobile */
+                width: 100%; /* Ensure nav items span full width */
+                text-align: center; /* Center text for mobile */
+            }
+            .navbar-nav .nav-item {
+                margin: 5px 0; /* Space items vertically on mobile */
+            }
+            .navbar-toggler {
+                position: absolute; /* Position toggler to the far left */
+                left: 15px; /* Adjust as needed */
+                top: 15px; /* Align with navbar height */
+                z-index: 1; /* Ensure it's on top */
+            }
+        }
 
-        
-        
-<nav class="navbar navbar-expand-lg" style="background-color: rgb(245, 240, 230);">
+        /* Desktop adjustments */
+        @media (min-width: 992px) {
+            .navbar-nav {
+                flex-direction: row; /* Keep nav items in a row */
+                margin-top: 10px; /* Space below brand */
+            }
+            .cart-on-mobile {
+                display: none; /* Hide mobile cart on desktop */
+            }
+        }
+    </style>
+</head>
+
+<script>
+    function updateBackground() {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const bodyHeight = document.body.offsetHeight;
+        const imageHeight = document.body.getBoundingClientRect().height;
+
+        let bgScroll = -scrollPosition * 0.5;
+
+        if (scrollPosition + windowHeight >= bodyHeight) {
+            bgScroll = -(imageHeight - windowHeight);
+        } else if (scrollPosition <= 0) {
+            bgScroll = 0;
+        }
+
+        document.body.style.setProperty('--scroll-position', `${bgScroll}px`);
+    }
+
+    window.addEventListener('scroll', updateBackground);
+</script>
+
+<nav class="navbar navbar-expand-lg" style="background-color: rgb(245, 240, 230); position: relative;">
     <button
         class="navbar-toggler"
         type="button"
@@ -120,17 +135,16 @@
         data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-        style="margin-right: 15px;">
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     
-    <a class="navbar-brand main-heading text-black" href="{% url 'store' %}" style="margin-left: 0;"> 
+    <a class="navbar-brand main-heading text-black" href="{% url 'store' %}"> 
         Naturals
     </a>
 
-    <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
-        <ul class="navbar-nav ms-auto">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
@@ -157,8 +171,22 @@
         </ul>
     </div>
     
-    <!-- Cart outside of the collapsible menu -->
-    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-mobile" style="margin-left: 15px;"> 
+    <!-- Cart for desktop view -->
+    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-desktop"> 
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
+        <div id="cart-qty" class="d-inline-flex">
+            {% with qty_amount=cart|length %}
+                {% if qty_amount > 0 %}
+                    {{ qty_amount }}
+                {% else %}
+                    0
+                {% endif %}
+            {% endwith %}
+        </div>
+    </a>
+    
+    <!-- Cart for mobile view -->
+    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-mobile" style="margin-left: 0;"> 
         <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
         <div id="cart-qty" class="d-inline-flex">
             {% with qty_amount=cart|length %}
@@ -172,77 +200,21 @@
     </a>
 </nav>
 
+{% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <h6 id="message-timer" class="alert alert-success text-center"><i class="fa fa-sign-out" aria-hidden="true"></i>   {{message}}</h6>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <h6 id="message-timer" class="alert alert-danger text-center"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>   {{message}}</h6>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+        <h6 id="message-timer" class="alert alert-success text-center"><i class="fa fa-check-circle" aria-hidden="true"></i>   {{message}}</h6>
+    {% endif %}
+{% endfor %}
 
-    {% for message in messages %}
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
 
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-
-                <h6 id="message-timer" class="alert alert-success text-center"><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp; {{message}}</h6>
-
-            {% endif %}
-
-
-
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-
-                <h6 id="message-timer" class="alert alert-danger text-center"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> &nbsp; {{message}}</h6>
-
-            {% endif %}
-
-
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-
-                <h6 id="message-timer" class="alert alert-success text-center"><i class="fa fa-check-circle" aria-hidden="true"></i> &nbsp; {{message}}</h6>
-
-            {% endif %}
-        
-
-
-    {% endfor %}
-
-
-    <body>
-
-
-        {% block content %} 
-        
-        
-
-
-
-
-
-            
-        {% endblock %}
-    
-        
-
-
-    </body>
-
-    <script src="{% static 'js/app.js' %}"></script>
-
+<script src="{% static 'js/app.js' %}"></script>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

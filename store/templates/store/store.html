@@ -11,28 +11,22 @@
 
   .centered-image {
       text-align: center;
-      width: 100%; /* Ensure it takes full width of its container */
-      padding: 0 15px; /* Add some padding for smaller screens */
+      width: 100vw; /* Full viewport width */
+      padding: 0;
   }
   
   .centered-image img {
-      display: inline-block;
-      max-width: 100%; /* This ensures the image doesn't exceed its container's width */
+      width: 100vw; /* Full viewport width */
       height: auto; /* Keeps aspect ratio */
+      display: block; /* Ensures it behaves as a block element */
+      margin: 0 auto; /* Centers the image */
   }
 
   /* For mobile devices */
   @media (max-width: 767px) {
     .centered-image img {
-        width: 100%; /* Full width on mobile */
+       
         
-        padding-top: 20px;
-        border-top-left-radius: 40px; /* Rounds only the top-left corner */
-        border-top-right-radius: 40px; /* Rounds only the top-right corner */
-        border-bottom-right-radius: 40px; /* Rounds only the top-right corner */
-        border-bottom-left-radius: 40px; /* Rounds only the top-right corner */
-
-
         box-sizing: border-box; /* Ensure padding is included in the max-width */
     }
 }
@@ -41,66 +35,47 @@
   @media (min-width: 768px) {
       .centered-image img {
           max-width: 1900px; /* Adjust to a reasonable value */
-          border-radius: 70px; /* Adds rounded corners. Adjust the 10px to change the roundness. */
           box-sizing: border-box; /* Ensure padding is included in the max-width */
-          padding-top: 20px;
+          
       }
   }
-</style>
-<!-- Introduction section -->
 
+  /* Adjust album container for full width */
+  .album .container {
+      max-width: 100%; /* Allows full width for the product grid */
+      padding: 0; /* Remove padding if not needed */
+  }
+</style>
+
+<!-- Introduction section -->
 <div class="centered-image">
     <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art">
 </div>
 
-
-    
-   
-
-
-
-       <!-- All products section -->
-      
-       <div class="album py-5" style="background-color: rgb(245, 240, 230);">
-
-        
-        <div class="container">
-
-
-    
-          <div class="pb-3 h5"> All products </div>
-
-
-          <hr>
-
-          <br>
-          
-
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-    
-           {% for product in my_products %}
-    
+<!-- All products section -->
+<div class="album py-5" style="background-color: rgb(245, 240, 230);">
+    <div class="container">
+        <div class="pb-3 h5"> All products </div>
+        <hr>
+        <br>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+            {% for product in my_products %}
             <div class="col">
-              <div class="card shadow-sm">
-                <img class="img-fluid" alt="Responsive image" src="{{product.image.url}}">
-                <div class="card-body">
-                  <p class="card-text">
-                    <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a>
-                  </p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h5> £ {{ product.price }} </h5>
-                  </div>
+                <div class="card shadow-sm">
+                    <img class="img-fluid" alt="Responsive image" src="{{product.image.url}}">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a>
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5> £ {{ product.price }} </h5>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            
             </div>
-    
             {% endfor %}
-    
-          </div>
         </div>
-      </div>
-
-
+    </div>
+</div>
 
 {% endblock %}
