@@ -163,27 +163,36 @@
             }
             .navbar-nav.center-nav .nav-item a {
                 display: inline-block;
-                padding: 0.75rem 1.5rem; /* More padding for a spacious, artsy look */
+                padding: 10px 20px; /* Padding to match the 'Naturals' link */
                 color: #557a95; /* A muted blue-green, like natural pigments */
                 text-decoration: none;
                 background-color: transparent; 
-                border: 2px solid #557a95; /* Border in the same color as text for harmony */
-                border-radius: 20px; /* Soft, rounded edges for an artful touch */
+                border: none; /* Remove border for consistency */
                 font-weight: bold; /* Strong text for impact */
                 font-size: 1.2rem; /* Larger text for emphasis */
                 margin: 0 5px; /* Space between items */
                 transition: all 0.3s ease; /* Smooth transition for hover effects */
             }
             .navbar-nav.center-nav .nav-item a:hover {
-                background-color: #557a95; /* Fill with color on hover */
-                color: #f8f9fa; /* Light text on dark background for contrast */
-                transform: scale(1.05); /* Slightly enlarge on hover for interaction */
+                /* Keep the same color but add an underline for interaction */
+                text-decoration: underline;
+                transform: none; /* Remove scaling on hover for a different interaction style */
             }
 
             /* Hide main nav items on desktop */
             .navbar-nav:not(.center-nav) {
                 display: none; /* Hide the non-centered nav items */
             }
+        }
+        .jtek {
+            width: 10%; /* Adjust as needed */
+            margin-left: auto;
+            margin-right: auto;
+            display: block; /* Ensure it appears on a new line */
+        }
+        .footer-content {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -327,6 +336,12 @@
 <body>
     {% block content %}
     {% endblock %}
+
+    <!-- Footer content -->
+    <footer class="footer-content">
+        <p class="copywright">a product of James Technology JTEK trademark</p>
+        <img class="jtek" src="{% static 'images/jtek.png' %}" alt="JTEK Logo">
+    </footer>
 </body>
 
 <script src="{% static 'js/app.js' %}"></script>
