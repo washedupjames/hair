@@ -39,9 +39,6 @@
         .navbar-brand {
             margin: 10px 0; /* Space above and below the brand */
         }
-        .navbar-toggler {
-            order: 0; /* Place toggler at the top on mobile */
-        }
 
         /* Layout for nav items and cart */
         .navbar-nav {
@@ -91,6 +88,30 @@
                 top: 15px; /* Align with navbar height */
                 z-index: 1; /* Ensure it's on top */
             }
+            .center-nav {
+                flex-direction: column;
+            }
+            /* Hide the left dropdown on mobile */
+            .dropdown-left {
+                display: none;
+            }
+
+            /* Style all menu items uniformly without boxes */
+            .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
+                display: block;
+                padding: 0.5rem 1rem; /* Consistent padding */
+                color: #4a4a4a; /* Dark gray for an earthy feel */
+                text-decoration: none; /* No underlines */
+                background-color: transparent; /* No background */
+                border: none; /* No border */
+                font-weight: 600; /* Semi-bold for emphasis */
+                font-size: 1.1rem; /* Slightly larger text */
+                transition: all 0.3s ease; /* Smooth transition for hover effects */
+            }
+            .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
+                color: #7a5230; /* A warm brown on hover */
+                transform: scale(1.05); /* Slightly enlarge on hover */
+            }
         }
 
         /* Desktop adjustments */
@@ -101,6 +122,67 @@
             }
             .cart-on-mobile {
                 display: none; /* Hide mobile cart on desktop */
+            }
+            
+            /* Position dropdown to the far left */
+            .dropdown-left {
+                position: absolute;
+                left: 0; /* Align with left edge of screen */
+                top: 15px;
+                z-index: 1;
+            }
+
+            /* Ensure dropdown menu aligns to the left edge */
+            .dropdown-left .dropdown-menu {
+                left: 0 !important;
+                right: auto !important;
+                background-color: transparent; /* No background for the dropdown menu itself */
+                border: none; /* No border for dropdown menu */
+            }
+
+            /* Style all dropdown items uniformly */
+            .dropdown-left .dropdown-item {
+                padding: 0.5rem 1rem; /* Consistent padding */
+                color: #4a4a4a; /* Dark gray for an earthy feel */
+                text-decoration: none; /* No underlines */
+                background-color: transparent; /* No background */
+                border: none; /* No border */
+                font-weight: 600; /* Semi-bold for emphasis */
+                font-size: 1.1rem; /* Slightly larger text */
+                transition: all 0.3s ease; /* Smooth transition for hover effects */
+            }
+            .dropdown-left .dropdown-item:hover {
+                color: #7a5230; /* A warm brown on hover */
+                transform: scale(1.05); /* Slightly enlarge on hover */
+            }
+
+            /* Styling for centered navigation items under "Naturals" */
+            .navbar-nav.center-nav {
+                display: flex; /* Show the centered nav items */
+                margin-bottom: 20px; /* Add padding underneath */
+            }
+            .navbar-nav.center-nav .nav-item a {
+                display: inline-block;
+                padding: 0.75rem 1.5rem; /* More padding for a spacious, artsy look */
+                color: #557a95; /* A muted blue-green, like natural pigments */
+                text-decoration: none;
+                background-color: transparent; 
+                border: 2px solid #557a95; /* Border in the same color as text for harmony */
+                border-radius: 20px; /* Soft, rounded edges for an artful touch */
+                font-weight: bold; /* Strong text for impact */
+                font-size: 1.2rem; /* Larger text for emphasis */
+                margin: 0 5px; /* Space between items */
+                transition: all 0.3s ease; /* Smooth transition for hover effects */
+            }
+            .navbar-nav.center-nav .nav-item a:hover {
+                background-color: #557a95; /* Fill with color on hover */
+                color: #f8f9fa; /* Light text on dark background for contrast */
+                transform: scale(1.05); /* Slightly enlarge on hover for interaction */
+            }
+
+            /* Hide main nav items on desktop */
+            .navbar-nav:not(.center-nav) {
+                display: none; /* Hide the non-centered nav items */
             }
         }
     </style>
@@ -147,27 +229,38 @@
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
                         <i class="fa fa-home" aria-hidden="true"></i> Dashboard
                     </a>
                 </li>
+            {% endif %}
+            <!-- Authentication links for mobile -->
+            {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
+                </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
-                </li>
-            {% endif %}
-
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
                         <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                     </a>
                 </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="btn btn-alert navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
-                </li>
             {% endif %}
+        </ul>
+        <!-- New centered navigation items -->
+        <ul class="navbar-nav center-nav">
+            <li class="nav-item">
+                <a href="#">Products</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">Contact</a>
+            </li>
         </ul>
     </div>
     
@@ -198,6 +291,27 @@
             {% endwith %}
         </div>
     </a>
+
+    <!-- Dropdown for auth links positioned to the far left for desktop only -->
+    <div class="dropdown dropdown-left">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="authDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.is_authenticated %}
+                <i class="fa fa-user" aria-hidden="true"></i> Account
+            {% else %}
+                <i class="fa fa-sign-in" aria-hidden="true"></i> Login/Register
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+            {% if user.is_authenticated %}
+                <li><a class="dropdown-item text-black" href="{% url 'user-logout' %}">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                </a></li>
+            {% else %}
+                <li><a class="dropdown-item text-black" href="{% url 'my-login' %}"> Login </a></li>
+                <li><a class="dropdown-item text-black" href="{% url 'register' %}"> Register </a></li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>
 
 {% for message in messages %}
