@@ -118,7 +118,7 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-'''
+
 
 DATABASES = {
     'default': {
@@ -127,7 +127,7 @@ DATABASES = {
     }
 }
 
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -198,7 +198,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # - Enter your app password
 HOST_EMAIL = env('EMAIL_HOST_USER')
 
 
-
+'''
 # AWS configuration
 
 
@@ -262,3 +262,4 @@ DATABASES = {
 
 
 
+'''

@@ -6,7 +6,7 @@
 
 <style>
   body {
-      background-color: rgb(215, 215, 215);
+      background-color: rgba(215, 215, 215, 0.326);
   }
 
   .centered-image {
@@ -23,19 +23,30 @@
 
   /* For mobile devices */
   @media (max-width: 767px) {
-      .centered-image img {
-          width: 100%; /* Full width on mobile */
-      }
-  }
+    .centered-image img {
+        width: 100%; /* Full width on mobile */
+        
+        padding-top: 20px;
+        border-top-left-radius: 40px; /* Rounds only the top-left corner */
+        border-top-right-radius: 40px; /* Rounds only the top-right corner */
+        border-bottom-right-radius: 40px; /* Rounds only the top-right corner */
+        border-bottom-left-radius: 40px; /* Rounds only the top-right corner */
+
+
+        box-sizing: border-box; /* Ensure padding is included in the max-width */
+    }
+}
 
   /* For larger screens like laptops */
   @media (min-width: 768px) {
       .centered-image img {
-          max-width: 800px; /* Adjust this value to what you consider "reasonable" */
+          max-width: 1900px; /* Adjust to a reasonable value */
+          border-radius: 70px; /* Adds rounded corners. Adjust the 10px to change the roundness. */
+          box-sizing: border-box; /* Ensure padding is included in the max-width */
+          padding-top: 20px;
       }
   }
 </style>
-
 <!-- Introduction section -->
 
 <div class="centered-image">
@@ -50,7 +61,8 @@
 
        <!-- All products section -->
       
-       <div class="album py-5 bg-light">
+       <div class="album py-5" style="background-color: rgb(245, 240, 230);">
+
         
         <div class="container">
 
