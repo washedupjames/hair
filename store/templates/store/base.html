@@ -7,7 +7,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8"/>
-    <title> Naturals </title>
+    <title>Naturals</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
@@ -23,21 +23,27 @@
         body {
             margin: 0; 
             height: auto; 
-            background-color: #f8f9fa; 
+            background-color: rgb(245, 240, 230); /* New background color for all pages */
         }
 
         body::before {
-            background-image: url('{% static "media/images/Tracyart.jpg" %}');
+            /* If you want to keep the image, adjust its opacity or interaction with the background color */
+            background-image: url('{% static "media/images/Tracyart width.jpg" %}');
+            opacity: 0.1; /* Example: makes the image semi-transparent */
         }
 
         /* Updated navbar styles for centering */
         .navbar {
-            padding: 0; /* Reset default padding */
-            flex-direction: column; /* Stack items vertically */
-            align-items: center; /* Center items horizontally */
+            padding: 0;
+            flex-direction: column;
+            align-items: center;
+            background-color: #E9E9E9;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
         .navbar-brand {
-            margin: 10px 0; /* Space above and below the brand */
+            margin: 10px 0;
         }
 
         /* Layout for nav items and cart */
@@ -46,47 +52,47 @@
             flex-direction: row;
             align-items: center;
             width: 100%;
-            justify-content: center; /* Center nav items */
+            justify-content: center;
         }
         .navbar-nav .nav-item {
-            margin: 0 5px; /* Space between nav items */
+            margin: 0 5px;
         }
         .navbar-nav .btn {
-            padding: 0.25rem 0.5rem; /* Reduce padding to fit more items */
+            padding: 0.25rem 0.5rem;
         }
 
         /* Desktop cart positioning */
         .cart-on-desktop {
-            position: absolute; /* Take out of normal document flow */
-            right: 15px; /* Push to the right edge */
-            top: 15px; /* Align with navbar height */
-            z-index: 1; /* Ensure it's above other content */
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 1;
         }
 
         /* Mobile adjustments */
         @media (max-width: 991.98px) {
             .navbar .navbar-collapse {
-                margin-right: 0; /* No need for this on mobile */
+                margin-right: 0;
             }
             .cart-on-mobile {
-                position: absolute; /* Position cart to the far right */
-                top: 15px; /* Adjust based on your navbar padding */
-                right: 15px; /* Far right of the screen */
-                z-index: 1; /* Ensure it's on top */
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                z-index: 1;
             }
             .navbar-nav {
-                flex-direction: column; /* Stack items vertically on mobile */
-                width: 100%; /* Ensure nav items span full width */
-                text-align: center; /* Center text for mobile */
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
             }
             .navbar-nav .nav-item {
-                margin: 5px 0; /* Space items vertically on mobile */
+                margin: 5px 0;
             }
             .navbar-toggler {
-                position: absolute; /* Position toggler to the far left */
-                left: 15px; /* Adjust as needed */
-                top: 15px; /* Align with navbar height */
-                z-index: 1; /* Ensure it's on top */
+                position: absolute;
+                left: 15px;
+                top: 15px;
+                z-index: 1;
             }
             .center-nav {
                 flex-direction: column;
@@ -99,35 +105,42 @@
             /* Style all menu items uniformly without boxes */
             .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
                 display: block;
-                padding: 0.5rem 1rem; /* Consistent padding */
-                color: #4a4a4a; /* Dark gray for an earthy feel */
-                text-decoration: none; /* No underlines */
-                background-color: transparent; /* No background */
-                border: none; /* No border */
-                font-weight: 600; /* Semi-bold for emphasis */
-                font-size: 1.1rem; /* Slightly larger text */
-                transition: all 0.3s ease; /* Smooth transition for hover effects */
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
             }
             .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
-                color: #7a5230; /* A warm brown on hover */
-                transform: scale(1.05); /* Slightly enlarge on hover */
+                color: #7a5230;
+                transform: scale(1.05);
+            }
+
+            /* Adjust logo size for mobile */
+            .navbar-brand img {
+                height: 100px !important;
+                max-height: 100px !important;
+                width: auto;
             }
         }
 
         /* Desktop adjustments */
         @media (min-width: 992px) {
             .navbar-nav {
-                flex-direction: row; /* Keep nav items in a row */
-                margin-top: 10px; /* Space below brand */
+                flex-direction: row;
+                margin-top: 10px;
             }
             .cart-on-mobile {
-                display: none; /* Hide mobile cart on desktop */
+                display: none;
             }
             
             /* Position dropdown to the far left */
             .dropdown-left {
                 position: absolute;
-                left: 0; /* Align with left edge of screen */
+                left: 0;
                 top: 15px;
                 z-index: 1;
             }
@@ -136,59 +149,68 @@
             .dropdown-left .dropdown-menu {
                 left: 0 !important;
                 right: auto !important;
-                background-color: transparent; /* No background for the dropdown menu itself */
-                border: none; /* No border for dropdown menu */
+                background-color: transparent;
+                border: none;
             }
 
             /* Style all dropdown items uniformly */
             .dropdown-left .dropdown-item {
-                padding: 0.5rem 1rem; /* Consistent padding */
-                color: #4a4a4a; /* Dark gray for an earthy feel */
-                text-decoration: none; /* No underlines */
-                background-color: transparent; /* No background */
-                border: none; /* No border */
-                font-weight: 600; /* Semi-bold for emphasis */
-                font-size: 1.1rem; /* Slightly larger text */
-                transition: all 0.3s ease; /* Smooth transition for hover effects */
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
             }
             .dropdown-left .dropdown-item:hover {
-                color: #7a5230; /* A warm brown on hover */
-                transform: scale(1.05); /* Slightly enlarge on hover */
+                color: #7a5230;
+                transform: scale(1.05);
             }
 
             /* Styling for centered navigation items under "Naturals" */
             .navbar-nav.center-nav {
-                display: flex; /* Show the centered nav items */
-                margin-bottom: 20px; /* Add padding underneath */
+                display: flex;
+                margin-bottom: 20px;
             }
             .navbar-nav.center-nav .nav-item a {
                 display: inline-block;
-                padding: 10px 20px; /* Padding to match the 'Naturals' link */
-                color: #557a95; /* A muted blue-green, like natural pigments */
+                padding: 10px 20px;
+                color: #557a95;
                 text-decoration: none;
                 background-color: transparent; 
-                border: none; /* Remove border for consistency */
-                font-weight: bold; /* Strong text for impact */
-                font-size: 1.2rem; /* Larger text for emphasis */
-                margin: 0 5px; /* Space between items */
-                transition: all 0.3s ease; /* Smooth transition for hover effects */
+                border: none;
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin: 0 5px;
+                transition: all 0.3s ease;
             }
             .navbar-nav.center-nav .nav-item a:hover {
-                /* Keep the same color but add an underline for interaction */
                 text-decoration: underline;
-                transform: none; /* Remove scaling on hover for a different interaction style */
+                transform: none;
             }
 
             /* Hide main nav items on desktop */
             .navbar-nav:not(.center-nav) {
-                display: none; /* Hide the non-centered nav items */
+                display: none;
+            }
+
+            .desktop-only {
+                display: inline-block;
+            }
+
+            /* Ensure desktop logo size is maintained */
+            .navbar-brand img {
+                height: 150px;
+                width: auto;
             }
         }
         .jtek {
-            width: 10%; /* Adjust as needed */
+            width: 10%;
             margin-left: auto;
             margin-right: auto;
-            display: block; /* Ensure it appears on a new line */
+            display: block;
         }
         .footer-content {
             text-align: center;
@@ -196,6 +218,9 @@
         }
     </style>
 </head>
+
+
+<body>
 
 <script>
     function updateBackground() {
@@ -231,35 +256,11 @@
     </button>
     
     <a class="navbar-brand main-heading text-black" href="{% url 'store' %}"> 
-        Naturals
+        <img src="{% static 'media/images/naturals.png' %}" alt="Naturals Logo">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
-                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
-                    </a>
-                </li>
-            {% endif %}
-            <!-- Authentication links for mobile -->
-            {% if not user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-        <!-- New centered navigation items -->
+        <!-- Desktop navigation -->
         <ul class="navbar-nav center-nav">
             <li class="nav-item">
                 <a href="#">Products</a>
@@ -270,6 +271,50 @@
             <li class="nav-item">
                 <a href="#">Contact</a>
             </li>
+            <li class="nav-item dropdown desktop-only">
+                <a class="dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'user-logout' %}">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'my-login' %}">Login</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+        
+        <!-- Mobile navigation -->
+        <ul class="navbar-nav d-lg-none">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
+                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
     
@@ -300,27 +345,6 @@
             {% endwith %}
         </div>
     </a>
-
-    <!-- Dropdown for auth links positioned to the far left for desktop only -->
-    <div class="dropdown dropdown-left">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="authDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            {% if user.is_authenticated %}
-                <i class="fa fa-user" aria-hidden="true"></i> Account
-            {% else %}
-                <i class="fa fa-sign-in" aria-hidden="true"></i> Login/Register
-            {% endif %}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="authDropdown">
-            {% if user.is_authenticated %}
-                <li><a class="dropdown-item text-black" href="{% url 'user-logout' %}">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                </a></li>
-            {% else %}
-                <li><a class="dropdown-item text-black" href="{% url 'my-login' %}"> Login </a></li>
-                <li><a class="dropdown-item text-black" href="{% url 'register' %}"> Register </a></li>
-            {% endif %}
-        </ul>
-    </div>
 </nav>
 
 {% for message in messages %}
@@ -333,16 +357,17 @@
     {% endif %}
 {% endfor %}
 
-<body>
-    {% block content %}
-    {% endblock %}
 
-    <!-- Footer content -->
-    <footer class="footer-content">
-        <p class="copywright">a product of James Technology JTEK trademark</p>
-        <img class="jtek" src="{% static 'images/jtek.png' %}" alt="JTEK Logo">
-    </footer>
+    {% block content %}
+        <div>dit</div>
+    {% endblock %}
 </body>
+
+<!-- Footer content -->
+<footer class="footer-content">
+    <p class="copywright">a product of James Technology JTEK trademark</p>
+    <img class="jtek" src="{% static 'images/jtek.png' %}" alt="JTEK Logo">
+</footer>
 
 <script src="{% static 'js/app.js' %}"></script>
 
