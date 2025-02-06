@@ -1,4 +1,3 @@
-
 import os
 
 from pathlib import Path
@@ -7,25 +6,18 @@ env = environ.Env()
 
 import environ
 import os
-
-
 from dotenv import load_dotenv
 
 load_dotenv()  # Assuming your .env file is in the right place
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
 SANDBOX_PAYPAL_CLIENT_ID = os.getenv('SANDBOX_PAYPAL_CLIENT_ID')
-
-
-
 env = environ.Env()
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     env.read_env(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+BASE_DIR = Path(__file__).resolve().parent  # Adjusted for correct path
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -39,9 +31,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #CSRF_TRUSTED_ORIGINS = ['']
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -73,13 +62,9 @@ INSTALLED_APPS = [
 # To un-block PayPal popups - NB!
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
-
-
 # Crispy forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
 MIDDLEWARE = [ 
 
     'django.middleware.security.SecurityMiddleware',
@@ -113,23 +98,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 '''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 '''
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -148,8 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -160,32 +137,21 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    BASE_DIR / 'static/media',
+
 ]
-
-
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'static/media'
-
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 # Email configuration settings:
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -198,16 +164,9 @@ EMAIL_USE_TLS = 'True'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # - Enter your app password 
 HOST_EMAIL = env('EMAIL_HOST_USER')
-
-
-
 # AWS configuration
-
-
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID') # - Enter your AWS ACCESS KEY ID HERE
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY') # - Enter your AWS SECRET ACCESS KEY HERE
-
-
 # Amazon S3 Integration
 
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME') # - Enter your S3 bucket name HERE
@@ -230,15 +189,9 @@ STORAGES = {
     },
     
 }
-
-
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 AWS_S3_FILE_OVERWRITE = False
-
-
-
-
 
 # RDS (Database) configuration settings:
 DATABASES = {
@@ -258,9 +211,5 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
-
-
 
 

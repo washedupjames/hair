@@ -33,3 +33,16 @@
 
 
 
+/*form layouts*/
+
+
+
+    
+.form-layout {
+    background-color: rgb(240,240,240) !important; /* Light Gray for all containers */
+    padding: 20px; /* Equivalent to p-5 in Bootstrap */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Equivalent to shadow-md in Tailwind */
+}
+
+   
+

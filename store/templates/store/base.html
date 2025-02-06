@@ -123,6 +123,26 @@
                 margin-right: auto;
                 display: block;
             }
+
+            /* Uniform style for mobile dropdown items */
+            .navbar-nav.d-lg-none .nav-item a, 
+            .navbar-nav.d-lg-none .nav-item .btn {
+                color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
+                font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
+                font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
+                text-decoration: none !important;
+                background-color: transparent !important;
+                border: none !important;
+                padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
+                margin: 0 5px !important;
+                display: block !important; /* Ensure block display for consistency */
+                transition: all 0.3s ease !important;
+            }
+            .navbar-nav.d-lg-none .nav-item a:hover, 
+            .navbar-nav.d-lg-none .nav-item .btn:hover {
+                color: #7a5230 !important; /* Match hover color */
+                transform: scale(1.05) !important; /* Match hover effect */
+            }
         }
 
         @media (min-width: 992px) {
@@ -186,10 +206,6 @@
 
             .navbar-nav:not(.center-nav) {
                 display: none;
-            }
-
-            .desktop-only {
-                display: inline-block;
             }
 
             .navbar-brand img {
@@ -266,28 +282,6 @@
             <li class="nav-item">
                 <a href="#">Contact</a>
             </li>
-            <!-- Account is only for desktop -->
-            <li class="nav-item dropdown desktop-only">
-                <a class="dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Account
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'user-logout' %}">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'my-login' %}">Login</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'register' %}">Register</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </li>
         </ul>
         
         <!-- Mobile navigation -->
@@ -305,10 +299,10 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}"> Login </a>
+                    <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'register' %}"> Register </a>
+                    <a class="navbar-btn text-black" type="button" href="{% url 'register' %}">Register</a>
                 </li>
             {% endif %}
         </ul>
@@ -357,6 +351,79 @@
     {% block content %}
         <div>dit</div>
     {% endblock %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth >= 992) { // Desktop width
+            var desktopNav = document.querySelector('.navbar-nav.center-nav');
+            if (desktopNav) {
+                var accountItem = document.createElement('li');
+                accountItem.className = 'nav-item dropdown';
+                accountItem.innerHTML = `
+                    <a class="dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'user-logout' %}">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'my-login' %}">Login</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                `;
+                desktopNav.appendChild(accountItem);
+            }
+        }
+
+        // Recheck on window resize to add/remove "Account"
+        window.addEventListener('resize', function() {
+            var accountItem = document.querySelector('.navbar-nav.center-nav .dropdown');
+            if (window.innerWidth >= 992 && !accountItem) {
+                // Add Account if it's not there and screen is desktop
+                var desktopNav = document.querySelector('.navbar-nav.center-nav');
+                if (desktopNav) {
+                    var newAccountItem = document.createElement('li');
+                    newAccountItem.className = 'nav-item dropdown';
+                    newAccountItem.innerHTML = `
+                        <a class="dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            {% if user.is_authenticated %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'user-logout' %}">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'my-login' %}">Login</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    `;
+                    desktopNav.appendChild(newAccountItem);
+                }
+            } else if (window.innerWidth < 992 && accountItem) {
+                // Remove Account if screen is mobile
+                accountItem.remove();
+            }
+        });
+    });
+</script>
+
 </body>
 
 <!-- Footer content -->
