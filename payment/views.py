@@ -8,7 +8,6 @@ from django_countries.fields import CountryField
 from django.db import transaction
 from payment.models import Order, OrderItem
 from payment.models import ShippingAddress
-
 from django.contrib.auth.models import AnonymousUser
 
 def checkout(request):
@@ -40,9 +39,8 @@ def checkout(request):
 
 def payment_success(request):
     # Clear shopping cart
-    for key in list(request.session.keys()):
-        if key == 'session_key':
-            del request.session[key]
+    cart = Cart(request)
+    cart.clear()
     
     return render(request, 'payment/payment-success.html')
 
@@ -66,7 +64,7 @@ def complete_order(request):
         cart = Cart(request)
         cart_total = cart.get_total() 
 
-         # Calculate shipping cost
+        # Calculate shipping cost
         domesticRate = Decimal('3.00')  # UK shipping rate
         internationalRate = Decimal('5.00')  # International shipping rate
         shipping_cost = domesticRate if country == 'GB' else internationalRate
@@ -75,6 +73,7 @@ def complete_order(request):
         total_cost = cart_total + shipping_cost
 
         # Create order for both authenticated and guest users
+        order = None
         if request.user.is_authenticated:
             order = Order.objects.create(
                 full_name=name, 
@@ -119,11 +118,8 @@ Please see your order below:
 
 {cart_items}
 
-
-
 Cart: £{cart_total}
 Shipping: £{shipping_cost}
-
 
 Total: £{total_cost}'''
         send_mail(customer_email_subject, customer_email_body, settings.EMAIL_HOST_USER, [email], fail_silently=False)
@@ -138,16 +134,11 @@ Address:
 Products:
 {cart_items}
 
-
-
-
 Cart: £{cart_total}
 Shipping: £{shipping_cost}
 
 Total: £{total_cost}'''
-        send_mail(customer_email_subject, customer_email_body, settings.EMAIL_HOST_USER, [email], fail_silently=False)
         
-
         try:
             send_mail(host_email_subject, host_email_body, settings.EMAIL_HOST_USER, [settings.HOST_EMAIL], fail_silently=False)
         except Exception as e:
@@ -157,5 +148,5 @@ Total: £{total_cost}'''
         cart.clear()
 
         order_success = True
-        response = JsonResponse({'success': order_success})
+        response = JsonResponse({'success': order_success, 'newCartQty': 0})
         return response
