@@ -34,6 +34,9 @@ def checkout(request):
         'shipping': shipping 
     }
     
+    # New: Add cart quantity to context for display
+    context['cart_quantity'] = cart.__len__()  # Assuming Cart has a __len__ method
+    
     return render(request, 'payment/checkout.html', context=context)
 
 
@@ -148,5 +151,12 @@ Total: £{total_cost}'''
         cart.clear()
 
         order_success = True
+        # Send back the new cart quantity which should be 0 after clearing
         response = JsonResponse({'success': order_success, 'newCartQty': 0})
         return response
+
+# New function to update cart display on mobile
+def update_cart_display(request):
+    cart = Cart(request)
+    cart_quantity = cart.__len__()  # Assuming Cart has a __len__ method
+    return JsonResponse({'cart_quantity': cart_quantity})

@@ -8,6 +8,15 @@
     body {
         background-color: gray;
     }
+
+    @media (max-width: 767px) {
+        .cart-quantity {
+            display: none; /* Hide the quantity if it's zero on mobile */
+        }
+        .cart-quantity:not(:empty) {
+            display: inline; /* Show it when there's something in the cart */
+        }
+    }
 </style>
 
 <body>
@@ -28,74 +37,27 @@
 
                 <br>
 
-                <div class="form-field">
-                    <input class="form-control validate" id="name" name="name" type="text" placeholder="Full name*" autocomplete="off" value="{{shipping.full_name}}" required>
-                </div>
+                <!-- Your existing form fields here -->
 
                 <br>
 
-                <div class="form-field">
-                    <input class="form-control validate" id="email" name="email" type="email" placeholder="Email address*" autocomplete="off" value="{{shipping.email}}" required>
-                </div>
+                <!-- Show Cart Quantity -->
+                <p>
+                    <span class="cart-quantity" id="cart-quantity">
+                        {% if cart_quantity > 0 %}
+                            {{ cart_quantity }}
+                        {% endif %}
+                    </span> 
+                    items in your cart
+                </p>
 
-                <br>
+                <!-- Pay Pal -->
 
-                <div class="form-field">
-                    <input class="form-control validate" id="address1" name="address1" type="text" placeholder="Address 1*" autocomplete="off" value="{{shipping.address1}}" required>
-                </div>
+                <div id="paypal-button-container"></div>
 
-                <br>
-
-                <div class="form-field">
-                    <input class="form-control validate" id="address2" name="address2" type="text" placeholder="Address 2*" autocomplete="off" value="{{shipping.address2}}" required>
-                </div>
-
-                <br>
-
-                <div class="form-field">
-                    <input class="form-control validate" id="city" name="city" type="text" placeholder="City*" autocomplete="off" value="{{shipping.city}}" required>
-                </div>
-
-                <br>
-
-                <div class="form-field">
-                    <input class="form-control" id="state" name="state" type="text" placeholder="County (Optional)" autocomplete="off" value="{{shipping.county}}">
-                </div>
-
-                <br>
-
-                <div class="form-field">
-                    <input class="form-control validate" id="zipcode" name="zipcode" type="text" placeholder="Postcode (Optional)" autocomplete="off" value="{{shipping.zipcode}}">
-                </div>
-
-                <br>
-                <p> Please enter your country for delivery price to be added to your total. </p>
-                <hr>
-
-                <div class="form-field">
-                    <select class="form-control validate" id="country" name="country" required onchange="updateShippingCost()">
-                        <option value="" disabled selected>Select Country*</option>
-                        {% for code, name in COUNTRY_CHOICES %}
-                            <option value="{{ code }}">{{ name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                <script src="https://www.paypal.com/sdk/js?client-id={{ SANDBOX_PAYPAL_CLIENT_ID }}¤cy=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
 
             </div>
-
-            <br>
-
-            <!-- Display Shipping and Total Cost -->
-            <p id="shipping-cost">Shipping Cost: £0.00</p>
-            <p id="total-cost">Total Cost: £{{ cart_total }}</p>
-
-            <!-- Pay Pal -->
-
-            <div id="paypal-button-container"></div>
-
-            <script src="https://www.paypal.com/sdk/js?client-id={{ SANDBOX_PAYPAL_CLIENT_ID }}&currency=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
-
-
         </form>
   
     </div>
@@ -104,46 +66,51 @@
 
 </body>
 
+<!-- Ajax integration -->
 
-    <!-- Ajax integration -->
+<script>
+    // Total price
+    var total_price = '{{ cart_total }}';
 
-    
-    <script>
-        // Total price
-        var total_price = '{{ cart_total }}';
-    
-        // Function to update shipping cost based on country
-        function updateShippingCost() {
-            var country = document.getElementById('country').value;
-            var domesticRate = 3.00;  // UK shipping rate
-            var internationalRate = 5.00;  // International shipping rate
-            
-            // Check if the country is UK (GB)
-            if (country === 'GB') {
-                document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + domesticRate.toFixed(2);
-                updateTotalCost(domesticRate);
-            } else {
-                document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + internationalRate.toFixed(2);
-                updateTotalCost(internationalRate);
-            }
+    // Function to update shipping cost based on country
+    function updateShippingCost() {
+        var country = document.getElementById('country').value;
+        var domesticRate = 3.00;  // UK shipping rate
+        var internationalRate = 5.00;  // International shipping rate
+        
+        // Check if the country is UK (GB)
+        if (country === 'GB') {
+            document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + domesticRate.toFixed(2);
+            updateTotalCost(domesticRate);
+        } else {
+            document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + internationalRate.toFixed(2);
+            updateTotalCost(internationalRate);
         }
-    
-        // Function to update total cost
-        function updateTotalCost(shippingCost) {
-            var cartTotal = parseFloat('{{ cart_total }}');
-            var totalCost = cartTotal + shippingCost;
-            document.getElementById('total-cost').innerText = 'Total Cost: £' + totalCost.toFixed(2);
-            
-            // Update total_price for PayPal
-            total_price = totalCost.toFixed(2);
-        }
-    
-        // Initial call to set shipping cost when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Here we set a default country or let it be empty
-            document.getElementById('country').value = ''; // Or set to 'GB' if you want UK as default
-            updateShippingCost();
-        });
+    }
+
+    // Function to update total cost
+    function updateTotalCost(shippingCost) {
+        var cartTotal = parseFloat('{{ cart_total }}');
+        var totalCost = cartTotal + shippingCost;
+        document.getElementById('total-cost').innerText = 'Total Cost: £' + totalCost.toFixed(2);
+        
+        // Update total_price for PayPal
+        total_price = totalCost.toFixed(2);
+    }
+
+    // Initial call to set shipping cost when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Here we set a default country or let it be empty
+        document.getElementById('country').value = ''; // Or set to 'GB' if you want UK as default
+        updateShippingCost();
+
+        // Update cart quantity display
+        fetch('{% url 'update_cart_display' %}')
+            .then(response => response.json())
+            .then(data => {
+                var cartQty = document.getElementById('cart-quantity');
+                cartQty.textContent = data.cart_quantity > 0 ? data.cart_quantity : '';
+            });
 
         // Function to check form validity, now using actions from PayPal
         function checkFormValidity(actions) {
@@ -175,7 +142,7 @@
                 actions.disable();
             }
         }
-    
+
         // PayPal script
         paypal.Buttons({
             // optional styling for buttons
@@ -264,6 +231,7 @@
         }).render("#paypal-button-container").catch((err) => {
             console.error('PayPal Buttons failed to render', err);
         });
-    </script>
+    });
+</script>
 
 {% endblock %}

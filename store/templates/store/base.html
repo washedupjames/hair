@@ -57,7 +57,7 @@
             padding: 0.25rem 0.5rem;
         }
 
-        .cart-on-desktop {
+        .cart-counter {
             position: absolute;
             right: 15px;
             top: 15px;
@@ -67,12 +67,6 @@
         @media (max-width: 991.98px) {
             .navbar .navbar-collapse {
                 margin-right: 0;
-            }
-            .cart-on-mobile {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                z-index: 1;
             }
             .navbar-nav {
                 flex-direction: column;
@@ -149,9 +143,6 @@
             .navbar-nav {
                 flex-direction: row;
                 margin-top: 10px;
-            }
-            .cart-on-mobile {
-                display: none;
             }
             
             .dropdown-left {
@@ -308,22 +299,8 @@
         </ul>
     </div>
     
-    <!-- Cart for desktop view -->
-    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-desktop"> 
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
-        <div id="cart-qty" class="d-inline-flex">
-            {% with qty_amount=cart|length %}
-                {% if qty_amount > 0 %}
-                    {{ qty_amount }}
-                {% else %}
-                    0
-                {% endif %}
-            {% endwith %}
-        </div>
-    </a>
-    
-    <!-- Cart for mobile view -->
-    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-on-mobile" style="margin-left: 0;"> 
+    <!-- Cart for both desktop and mobile -->
+    <a type="button" role="button" href="{% url 'cart-summary' %}" class="btn btn-outline-secondary cart-counter"> 
         <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
         <div id="cart-qty" class="d-inline-flex">
             {% with qty_amount=cart|length %}
@@ -421,6 +398,19 @@
                 accountItem.remove();
             }
         });
+
+        // Function to update cart quantity
+        function updateCartQuantity() {
+            fetch('{% url "update_cart_display" %}')
+                .then(response => response.json())
+                .then(data => {
+                    var cartQty = document.getElementById('cart-qty');
+                    cartQty.textContent = data.cart_quantity > 0 ? data.cart_quantity : '';
+                });
+        }
+
+        // Update on initial load
+        updateCartQuantity();
     });
 </script>
 
