@@ -26,6 +26,8 @@ class Cart():
     
     def clear(self):
         self.cart = {}
+        self.session['session_key'] = {}
+        self.session.modified = True
 
 
     def add(self, product, product_qty):

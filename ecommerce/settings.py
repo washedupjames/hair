@@ -101,14 +101,14 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -145,6 +145,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 
 ]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'static/media'
@@ -164,6 +167,17 @@ EMAIL_USE_TLS = 'True'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # - Enter your app password 
 HOST_EMAIL = env('EMAIL_HOST_USER')
+
+
+
+
+
+
+'''
+
+
+
+
 # AWS configuration
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID') # - Enter your AWS ACCESS KEY ID HERE
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY') # - Enter your AWS SECRET ACCESS KEY HERE
@@ -212,4 +226,4 @@ DATABASES = {
     }
 }
 
-
+'''

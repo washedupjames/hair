@@ -409,8 +409,9 @@
                 });
         }
 
-        // Update on initial load
+        // Update on initial load and expose function globally
         updateCartQuantity();
+        window.updateCartDisplay = updateCartQuantity;
     });
 </script>
 
