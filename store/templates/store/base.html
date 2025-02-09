@@ -192,7 +192,12 @@
             }
             .navbar-nav.center-nav .nav-item a:hover {
                 text-decoration: underline;
-                transform: none;
+                color: black;
+            }
+            .navbar-nav.center-nav .nav-item a.active,
+            .navbar-nav.center-nav .nav-item .navbar-btn.active {
+                color: black !important;
+                text-decoration: underline !important;
             }
 
             .navbar-nav:not(.center-nav) {
@@ -265,33 +270,39 @@
         <!-- Desktop navigation -->
         <ul class="navbar-nav center-nav">
             <li class="nav-item">
-                <a href="#">Products</a>
+                <a href="{% url 'store' %}" class="navbar-btn {% if request.path == '/' %}active{% endif %}">Home</a>
             </li>
             <li class="nav-item">
-                <a href="#">About</a>
+                <a href="{% url 'products' %}" class="{% if request.path == '/products/' %}active{% endif %}">Products</a>
             </li>
             <li class="nav-item">
-                <a href="#">Contact</a>
+                <a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
             </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'dashboard' %}" class="navbar-btn {% if request.path|slice:":18" == "/account/dashboard" %}active{% endif %}">
+                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+                    </a>
+                </li>
+            {% endif %}
         </ul>
         
         <!-- Mobile navigation -->
         <ul class="navbar-nav d-lg-none">
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="navbar-btn text-black" type="button" href="{% url 'dashboard' %}">
-                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
+            
+            <li class="nav-item">
+                {% if user.is_authenticated %}
                     <a class="navbar-btn text-black" type="button" href="{% url 'user-logout' %}">
                         <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                     </a>
-                </li>
-            {% else %}
-                <li class="nav-item">
+                {% else %}
                     <a class="navbar-btn text-black" type="button" href="{% url 'my-login' %}">Login</a>
-                </li>
+                {% endif %}
+            </li>
+            {% if not user.is_authenticated %}
                 <li class="nav-item">
                     <a class="navbar-btn text-black" type="button" href="{% url 'register' %}">Register</a>
                 </li>
@@ -425,4 +436,4 @@
 
 <script src="{% static 'js/app.js' %}"></script>
 
-</html>
+</html>                 

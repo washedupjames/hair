@@ -1,0 +1,55 @@
+.form-layout {
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgb(226, 236, 252); /* Light Gray */
+    
+    /* 3D Effects */
+    box-shadow: 
+        0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
+        0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg); /* 3D space */
+    transition: all 0.3s ease;
+
+    /* Pseudo-elements for 3D effect */
+    position: relative;
+}
+
+/* Example: Adjusting font size for smaller screens */
+@media (max-width: 600px) {
+    .main-heading {
+        font-size: 1.5rem; /* Adjust the font size for mobile */
+    }
+    #message-timer {
+        font-size: 0.9rem; /* Smaller font for messages on mobile */
+    }
+    .form-layout {
+        width: 100%; /* Ensures it's full width on mobile */
+        padding: 10px; /* Less padding on smaller screens */
+    }
+    /* You might also want to adjust other elements within the form */
+    .form-field {
+        margin-bottom: 15px; /* Adds space between form fields */
+    }
+    .form-field input, .form-field select {
+        width: 100%; /* Ensures form inputs take full width */
+    }
+}
+
+
+
+/*Base*/
+
+
+
+/*form layouts*/
+
+
+
+    
+
+
+   
+

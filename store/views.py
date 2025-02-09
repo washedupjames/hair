@@ -4,6 +4,8 @@ from . models import Category, Product
 
 from django.shortcuts import get_object_or_404
 
+
+
 def store(request):
 
     all_products = Product.objects.all()
@@ -11,6 +13,28 @@ def store(request):
     context = {'my_products':all_products}
 
     return render(request, 'store/store.html' , context)
+
+
+
+def products(request):
+
+    all_products = Product.objects.all()
+
+    context = {'my_products':all_products}
+
+    return render(request, 'store/products.html' , context)
+
+
+def about(request):
+    return render(request, 'store/about.html', {'title': 'About James Parker'})
+
+
+def contact(request):
+    return render(request, 'store/contact.html', {'title': 'About James Parker'})
+
+
+
+
 
 
 def categories(request):

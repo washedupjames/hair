@@ -4,14 +4,12 @@
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    background-color: hsl(209, 100%, 95%)
-
-    ; /* Light Gray */
+    background-color: rgb(226, 236, 252); /* Light Gray */
     
     /* 3D Effects */
     box-shadow: 
-        10px 10px 20px rgba(0, 0, 0, 0.1), /* Shadow for depth */
-        -10px -10px 20px rgba(255, 255, 255, 0.5); /* Light for highlight */
+        0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
+        0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
     transform: perspective(1000px) rotateX(0deg) rotateY(0deg); /* 3D space */
     transition: all 0.3s ease;
 
