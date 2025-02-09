@@ -37,6 +37,8 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to='images/')
 
+    order = models.IntegerField(default=0)
+
     class Meta:
 
         verbose_name_plural = 'products'
