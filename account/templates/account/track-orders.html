@@ -1,5 +1,5 @@
 
-{% include "store/base.html" %}
+{% extends "store/base.html" %}
 
 {% load static %}
 
@@ -8,24 +8,11 @@
 
 {% block content %}
 
-    <style>
-
-
-        body{
-
-
-            background-color: gray;
-
-        }
-        
-
-
-
-    </style>
+    
 
     <br>
 
-    <div class="container bg-white shadow-md p-5 form-layout ">
+    <div class="container form-layout ">
 
         <h3> <i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp; My orders </h3>
 
@@ -38,7 +25,7 @@
 
     <br>
 
-    <div class="container bg-white shadow-md p-5 form-layout ">
+    <div class="form-layout ">
 
         {% for order in orders %}
 
@@ -54,7 +41,7 @@
 
             <br> <br>
 
-            $ {{order.price}}
+            £ {{order.price}}
 
             <br> <br>
 

@@ -97,53 +97,54 @@
 
 </div>
 
-
+<div class="modal fade" id="cartAddedModal" tabindex="-1" role="dialog" aria-labelledby="cartAddedModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartAddedModalLabel">Item Added to Cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>The item has been successfully added to your cart.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{% url 'cart-summary' %}" class="btn btn-primary">View Cart</a>
+        </div>
+      </div>
+    </div>
+</div>
 
 <script>
-
     // Add button
-
     $(document).on('click', '#add-button', function(e){
-
         e.preventDefault();
 
         $.ajax({
-
             type: 'POST',
             url: '{% url "cart-add" %}',
             data: {
-
                 product_id: $('#add-button').val(),
                 product_quantity: $('#select option:selected').text(),
-                csrfmiddlewaretoken: "{{csrf_token}}",
+                csrfmiddlewaretoken: "{{ csrf_token }}",
                 action: 'post'
-
             },
-
             success: function(json){
-
-                //console.log(json)
-
-                document.getElementById("cart-qty").textContent = json.qty
-
-               
-
-
+                document.getElementById("cart-qty").textContent = json.qty;
+                $('#cartAddedModal').modal('show');
+                
+                // Set a timeout to hide the modal after 3 seconds
+                setTimeout(function() {
+                    $('#cartAddedModal').modal('hide');
+                }, 3000); // 3000 milliseconds = 3 seconds
             },
-
             error: function(xhr, errmsg, err){
-
-
+                console.log(xhr.status + ": " + xhr.responseText); // Log error for debugging
             }
-
         });
-
-
-    })
-
-
-
-
+    });
 </script>
 
 {% endblock %}

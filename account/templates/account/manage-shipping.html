@@ -1,4 +1,4 @@
-{% include "store/base.html" %}
+{% extends "store/base.html" %}
 
 {% load static %}
 
@@ -7,23 +7,14 @@
 {% block content %}
 
 
-    <style>
-
-
-        body{
-
-            background-color: gray;
-        }
-
-
-    </style>
+    
 
 
 <body>
 
     <br>
 
-    <div class="container bg-white shadow-md p-5 form-layout">
+    <div class="container form-layout">
 
         <h3> Manage shipping </h3>
 <P> Please fill in your shipping address </P>
