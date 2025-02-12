@@ -39,8 +39,10 @@ class Product(models.Model):
 
     order = models.IntegerField(default=0)
 
-    class Meta:
+    # Add the in_stock field here
+    in_stock = models.BooleanField(default=True)
 
+    class Meta:
         verbose_name_plural = 'products'
 
     def __str__(self):
