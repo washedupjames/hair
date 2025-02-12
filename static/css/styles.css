@@ -30,7 +30,7 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px; /* Default padding for larger screens */
-    background-color: hwb(229 92% 0%); /* Light Gray */
+    background-color: hwb(229 94% 0%); /* Light Gray */
     box-shadow: 
         0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
         0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
