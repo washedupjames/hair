@@ -1,23 +1,62 @@
+/* General Layout */
 .form-layout {
     border-radius: 20px;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: rgb(226, 236, 252); /* Light Gray */
-    
-    /* 3D Effects */
-    box-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
-        0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg); /* 3D space */
-    transition: all 0.3s ease;
-
-    /* Pseudo-elements for 3D effect */
-    position: relative;
+    padding: 20px; /* Default padding for larger screens */
+    background-color: hwb(229 96% 0%); /* Light Gray */
 }
 
-/* Example: Adjusting font size for smaller screens */
+/* Mobile adjustments for .form-layout */
+@media (max-width: 767px) {
+    .form-layout {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        max-width: calc(100% - 20px); /* adjust max-width to account for padding */
+        box-shadow: 
+            0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
+            0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg); /* 3D space */
+        transition: all 0.3s ease;
+        position: relative;
+    }
+}
+
+
+
+/* Store layout, similar to .form-layout but with a different class name */
+.form-layout-wide {
+    border-radius: 20px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: hwb(229 94% 0%);
+    box-shadow: 
+        0 0 20px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(255, 255, 255, 0.5) inset;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    transition: all 0.3s ease;
+    position: relative;
+    /* Remove overflow property */
+    /* Ensure content fits by adjusting height */
+    height: auto;
+    /* If content width causes issues, ensure it doesn't exceed container width */
+    box-sizing: border-box;
+}
+/* Mobile adjustments for .layout - Note: This was missing in your original CSS */
+@media (max-width: 767px) {
+    .form-layout-wide {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        max-width: calc(100% - 20px); /* adjust max-width to account for padding */
+        width: 95%;
+        
+    }
+}
+
+/* Adjustments for very small screens */
 @media (max-width: 600px) {
     .main-heading {
         font-size: 1.5rem; /* Adjust the font size for mobile */
@@ -29,27 +68,479 @@
         width: 100%; /* Ensures it's full width on mobile */
         padding: 10px; /* Less padding on smaller screens */
     }
-    /* You might also want to adjust other elements within the form */
+    /* Space between form fields */
     .form-field {
-        margin-bottom: 15px; /* Adds space between form fields */
+        margin-bottom: 15px;
     }
+    /* Full width for form inputs */
     .form-field input, .form-field select {
-        width: 100%; /* Ensures form inputs take full width */
+        width: 100%;
     }
 }
 
+/* Additional styles */
+body {
+    background-color: rgb(245, 240, 230); /* Match this to your products section background */
+}
 
+.footer-content {
+    background-color: rgb(245, 240, 230); /* Same color as body */
+}
 
-/*Base*/
+.centered-image {
+    text-align: center;
+    width: 100vw; /* Full viewport width */
+    padding: 0;
+}
 
+.centered-image img {
+    width: 100vw; /* Full viewport width */
+    height: auto; /* Keeps aspect ratio */
+    display: block; /* Ensures it behaves as a block element */
+    margin: 0 auto; /* Centers the image */
+}
 
+/* Mobile adjustments for images */
+@media (max-width: 767px) {
+    .centered-image img {
+        box-sizing: border-box; /* Ensure padding is included in the max-width */
+    }
+}
 
-/*form layouts*/
+/* Larger screens adjustments for images */
+@media (min-width: 768px) {
+    .centered-image img {
+        max-width: 1900px; /* Adjust to a reasonable value */
+    }
+}
 
+//* For larger screens */
+.album {
+    max-width: 90%; /* This allows for some margin on larger screens */
+    margin: 0 auto; /* Centers the container */
+    padding: 0 15px; /* Adds some padding for larger screens */
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
 
-
+/* For mobile devices */
+@media (max-width: 767px) {
+    .album {
+        width: 100%; /* Full width on small screens */
+        padding: 0 10px; /* Adds padding for mobile */
+        box-sizing: border-box; /* Ensures padding is included in the width */
+    }
     
+    .album .row {
+        justify-content: center; /* Center the content within the row for mobile */
+    }
+}
+        body {
+            margin: 0; 
+            height: auto; 
+            background-color: rgb(224, 239, 227)
+        }
+
+        body::before {
+            background-image: url('{% static "media/images/Tracyart width.jpg" %}');
+            opacity: 0.1;
+        }
+
+        .navbar {
+            padding: 0;
+            flex-direction: column;
+            align-items: center;
+            background-color: #E9E9E9;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .navbar-brand {
+            margin: 10px 0;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+        }
+        .navbar-nav .nav-item {
+            margin: 0 5px;
+        }
+        .navbar-nav .btn {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .cart-counter {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 1;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar .navbar-collapse {
+                margin-right: 0;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+            .navbar-nav .nav-item {
+                margin: 5px 0;
+            }
+            .navbar-toggler {
+                position: absolute;
+                left: 15px;
+                top: 15px;
+                z-index: 1;
+            }
+            .center-nav {
+                flex-direction: column;
+            }
+            .dropdown-left {
+                display: none;
+            }
+
+            .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
+                color: #7a5230;
+                transform: scale(1.05);
+            }
+
+            .navbar-brand img {
+                height: 100px !important;
+                max-height: 100px !important;
+                width: auto;
+            }
+            
+            .jtek {
+                width: 14%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
+            /* Uniform style for mobile dropdown items */
+            .navbar-nav.d-lg-none .nav-item a, 
+            .navbar-nav.d-lg-none .nav-item .btn {
+                color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
+                font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
+                font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
+                text-decoration: none !important;
+                background-color: transparent !important;
+                border: none !important;
+                padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
+                margin: 0 5px !important;
+                display: block !important; /* Ensure block display for consistency */
+                transition: all 0.3s ease !important;
+            }
+            .navbar-nav.d-lg-none .nav-item a:hover, 
+            .navbar-nav.d-lg-none .nav-item .btn:hover {
+                color: #7a5230 !important; /* Match hover color */
+                transform: scale(1.05) !important; /* Match hover effect */
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                flex-direction: row;
+                margin-top: 10px;
+            }
+            
+            .dropdown-left {
+                position: absolute;
+                left: 0;
+                top: 15px;
+                z-index: 1;
+            }
+
+            .dropdown-left .dropdown-menu {
+                left: 0 !important;
+                right: auto !important;
+                background-color: transparent;
+                border: none;
+            }
+
+            .dropdown-left .dropdown-item {
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .dropdown-left .dropdown-item:hover {
+                color: #7a5230;
+                transform: scale(1.05);
+            }
+
+            .navbar-nav.center-nav {
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .navbar-nav.center-nav .nav-item a {
+                display: inline-block;
+                padding: 10px 20px;
+                color: #557a95;
+                text-decoration: none;
+                background-color: transparent; 
+                border: none;
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin: 0 5px;
+                transition: all 0.3s ease;
+            }
+            .navbar-nav.center-nav .nav-item a:hover {
+                text-decoration: underline;
+                color: black;
+            }
+            .navbar-nav.center-nav .nav-item a.active,
+            .navbar-nav.center-nav .nav-item .navbar-btn.active {
+                color: black !important;
+                text-decoration: underline !important;
+            }
+
+            .navbar-nav:not(.center-nav) {
+                display: none;
+            }
+
+            .navbar-brand img {
+                height: 150px;
+                width: auto;
+            }
+            
+            .jtek {
+                width: 6%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+        }
+
+        .footer-content {
+            text-align: center;
+            
+        }
 
 
-   
 
+        /* base.html */
+
+
+        body {
+            margin: 0; 
+            height: auto; 
+            background-color: rgb(224, 239, 227)
+        }
+
+        body::before {
+            background-image: url('{% static "media/images/Tracyart width.jpg" %}');
+            opacity: 0.1;
+        }
+
+        .navbar {
+            padding: 0;
+            flex-direction: column;
+            align-items: center;
+            background-color: #E9E9E9;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .navbar-brand {
+            margin: 10px 0;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+        }
+        .navbar-nav .nav-item {
+            margin: 0 5px;
+        }
+        .navbar-nav .btn {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .cart-counter {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 1;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar .navbar-collapse {
+                margin-right: 0;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+            .navbar-nav .nav-item {
+                margin: 5px 0;
+            }
+            .navbar-toggler {
+                position: absolute;
+                left: 15px;
+                top: 15px;
+                z-index: 1;
+            }
+            .center-nav {
+                flex-direction: column;
+            }
+            .dropdown-left {
+                display: none;
+            }
+
+            .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
+                color: #7a5230;
+                transform: scale(1.05);
+            }
+
+            .navbar-brand img {
+                height: 100px !important;
+                max-height: 100px !important;
+                width: auto;
+            }
+            
+            .jtek {
+                width: 14%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
+            /* Uniform style for mobile dropdown items */
+            .navbar-nav.d-lg-none .nav-item a, 
+            .navbar-nav.d-lg-none .nav-item .btn {
+                color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
+                font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
+                font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
+                text-decoration: none !important;
+                background-color: transparent !important;
+                border: none !important;
+                padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
+                margin: 0 5px !important;
+                display: block !important; /* Ensure block display for consistency */
+                transition: all 0.3s ease !important;
+            }
+            .navbar-nav.d-lg-none .nav-item a:hover, 
+            .navbar-nav.d-lg-none .nav-item .btn:hover {
+                color: #7a5230 !important; /* Match hover color */
+                transform: scale(1.05) !important; /* Match hover effect */
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                flex-direction: row;
+                margin-top: 10px;
+            }
+            
+            .dropdown-left {
+                position: absolute;
+                left: 0;
+                top: 15px;
+                z-index: 1;
+            }
+
+            .dropdown-left .dropdown-menu {
+                left: 0 !important;
+                right: auto !important;
+                background-color: transparent;
+                border: none;
+            }
+
+            .dropdown-left .dropdown-item {
+                padding: 0.5rem 1rem;
+                color: #4a4a4a;
+                text-decoration: none;
+                background-color: transparent;
+                border: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .dropdown-left .dropdown-item:hover {
+                color: #7a5230;
+                transform: scale(1.05);
+            }
+
+            .navbar-nav.center-nav {
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .navbar-nav.center-nav .nav-item a {
+                display: inline-block;
+                padding: 10px 20px;
+                color: #557a95;
+                text-decoration: none;
+                background-color: transparent; 
+                border: none;
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin: 0 5px;
+                transition: all 0.3s ease;
+            }
+            .navbar-nav.center-nav .nav-item a:hover {
+                text-decoration: underline;
+                color: black;
+            }
+            .navbar-nav.center-nav .nav-item a.active,
+            .navbar-nav.center-nav .nav-item .navbar-btn.active {
+                color: black !important;
+                text-decoration: underline !important;
+            }
+
+            .navbar-nav:not(.center-nav) {
+                display: none;
+            }
+
+            .navbar-brand img {
+                height: 150px;
+                width: auto;
+            }
+            
+            .jtek {
+                width: 6%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+        }
+
+        .footer-content {
+            text-align: center;
+            
+        }

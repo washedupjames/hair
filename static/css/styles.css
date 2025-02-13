@@ -23,28 +23,36 @@
     }
 }
 
+
+
 /* Store layout, similar to .form-layout but with a different class name */
 .form-layout-wide {
     border-radius: 20px;
-    width: 100%;
+    width: 90%;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 20px; /* Default padding for larger screens */
-    background-color: hwb(229 94% 0%); /* Light Gray */
+    padding: 20px;
+    background-color: hwb(229 94% 0%);
     box-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.1), /* All-around shadow for depth */
-        0 0 20px rgba(255, 255, 255, 0.5) inset; /* All-around light for highlight */
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg); /* 3D space */
+        0 0 20px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(255, 255, 255, 0.5) inset;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
     transition: all 0.3s ease;
     position: relative;
+    /* Remove overflow property */
+    /* Ensure content fits by adjusting height */
+    height: auto;
+    /* If content width causes issues, ensure it doesn't exceed container width */
+    box-sizing: border-box;
 }
-
 /* Mobile adjustments for .layout - Note: This was missing in your original CSS */
 @media (max-width: 767px) {
     .form-layout-wide {
         padding-left: 10px !important;
         padding-right: 10px !important;
         max-width: calc(100% - 20px); /* adjust max-width to account for padding */
+        width: 95%;
+        
     }
 }
 
@@ -106,14 +114,26 @@ body {
     }
 }
 
-/* Adjust album container for full width */
-.album .container {
-    max-width: 100%; /* Allows full width for the product grid */
-    padding: 0; /* Remove padding if not needed */
+//* For larger screens */
+.album {
+    max-width: 90%; /* This allows for some margin on larger screens */
+    margin: 0 auto; /* Centers the container */
+    padding: 0 15px; /* Adds some padding for larger screens */
+    box-sizing: border-box; /* Ensures padding is included in the width */
 }
 
-
-
+/* For mobile devices */
+@media (max-width: 767px) {
+    .album {
+        width: 100%; /* Full width on small screens */
+        padding: 0 10px; /* Adds padding for mobile */
+        box-sizing: border-box; /* Ensures padding is included in the width */
+    }
+    
+    .album .row {
+        justify-content: center; /* Center the content within the row for mobile */
+    }
+}
         body {
             margin: 0; 
             height: auto; 
