@@ -15,19 +15,13 @@ def cart_add(request):
 
         product = get_object_or_404(Product, id=product_id)
 
-        # Check if there's enough stock
-        if product.quantity >= product_quantity:
-            # Reduce the stock
-            product.quantity -= product_quantity
-            product.save()
-            
+        try:
             cart.add(product=product, product_qty=product_quantity)
             cart_quantity = cart.__len__()
             response = JsonResponse({'qty': cart_quantity, 'success': True})
-        else:
-            # Not enough stock, inform the user
-            response = JsonResponse({'qty': cart_quantity, 'success': False, 'message': 'Not enough stock available.'})
-
+        except ValueError as e:
+            response = JsonResponse({'qty': cart_quantity, 'success': False, 'message': str(e)})
+        
         return response
 
 def cart_delete(request):
@@ -46,22 +40,14 @@ def cart_update(request):
         product_id = int(request.POST.get('product_id'))
         product_quantity = int(request.POST.get('product_quantity'))
 
-        product = get_object_or_404(Product, id=product_id)
-
-        # Check if there's enough stock for the update
-        if product.quantity >= product_quantity:
-            # Update the stock based on the difference between old and new quantity
-            old_quantity = cart.get(product_id).quantity  # Assuming Cart.get() returns an item with 'quantity'
-            quantity_diff = product_quantity - old_quantity
-            product.quantity -= quantity_diff
-            product.save()
-            
+        try:
             cart.update(product=product_id, qty=product_quantity)
             cart_quantity = cart.__len__()
             cart_total = cart.get_total()
             response = JsonResponse({'qty': cart_quantity, 'total': cart_total, 'success': True})
-        else:
-            # Not enough stock to update to the new quantity
-            response = JsonResponse({'qty': cart_quantity, 'total': cart_total, 'success': False, 'message': 'Not enough stock available for update.'})
-
+        except ValueError as e:
+            cart_quantity = cart.__len__()
+            cart_total = cart.get_total()
+            response = JsonResponse({'qty': cart_quantity, 'total': cart_total, 'success': False, 'message': str(e)})
+        
         return response
