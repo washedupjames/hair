@@ -5,14 +5,16 @@
 {% block content %}
 
 <!-- All products section -->
-<div class="album py-4 px-4" style="background-color: rgb(245, 240, 230);">   
-    <div class="row justify-content-center pb-3 h5"> Hair Products </div>
+<!-- All products section -->
+<div style="background-color: rgb(245, 240, 230);">   
+    <div class="row justify-content-center pb-3 h4"> All products </div>
     <hr>
+</div>
 
+<div class="album" style="background-color: rgb(245, 240, 230);">   
     <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
         {% for product in my_products %}
         <div class="col">
-            
             <div class="card shadow-sm">
                 <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
                 <div class="card-body">
@@ -31,5 +33,7 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Removed unnecessary line breaks at the end as they're redundant with the body background color extending to the footer -->
 
 {% endblock %}

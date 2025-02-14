@@ -40,7 +40,8 @@ class Product(models.Model):
     order = models.IntegerField(default=0)
 
     # Add the in_stock field here
-    in_stock = models.BooleanField(default=True)
+    quantity = models.IntegerField(default=0)  # Default to 0 or a positive number if you want initial stock
+
 
     class Meta:
         verbose_name_plural = 'products'
@@ -52,3 +53,10 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product-info', args=[self.slug])
+
+    @property
+    def in_stock(self):
+        """
+        Property to check if the product is in stock based on quantity.
+        """
+        return self.quantity > 0

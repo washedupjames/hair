@@ -116,7 +116,7 @@
 
 
 <!-- All products section -->
-<div class="style="background-color: rgb(245, 240, 230);">   
+<div style="background-color: rgb(245, 240, 230);">   
     <div class="row justify-content-center pb-3 h4"> All products </div>
     <hr>
 </div>
@@ -128,10 +128,13 @@
         {% for product in my_products %}
         <div class="col">
             <div class="card shadow-sm">
-                <img class="img-fluid" alt="Responsive image" src="{{product.image.url}}">
+                <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
                 <div class="card-body">
                     <p class="card-text">
                         <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a>
+                        {% if not product.in_stock %}
+                        <span class="text-danger ml-2">(Out of Stock)</span>
+                        {% endif %}
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <h5> £ {{ product.price }} </h5>
@@ -145,7 +148,7 @@
 </div>
 
 <!-- This container is not needed as the body background color will extend to the footer -->
-</div>
+
 <br>
 <br>
 <br>

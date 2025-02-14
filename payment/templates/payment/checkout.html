@@ -4,8 +4,6 @@
 
 {% block content %}
 
-
-
 <body>
 
     <br>
@@ -89,9 +87,7 @@
 
             <div id="paypal-button-container"></div>
 
-            <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
-
-
+            <script src="https://www.paypal.com/sdk/js?client-id={{ SANDBOX_PAYPAL_CLIENT_ID }}&currency=GBP&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
         </form>
   
     </div>
@@ -100,166 +96,148 @@
 
 </body>
 
+<script>
+    // Total price
+    var total_price = '{{ cart_total }}';
 
-    <!-- Ajax integration -->
-
-    
-    <script>
-        // Total price
-        var total_price = '{{ cart_total }}';
-    
-        // Function to update shipping cost based on country
-        function updateShippingCost() {
-            var country = document.getElementById('country').value;
-            var domesticRate = 3.00;  // UK shipping rate
-            var internationalRate = 5.00;  // International shipping rate
-            
-            // Check if the country is UK (GB)
-            if (country === 'GB') {
-                document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + domesticRate.toFixed(2);
-                updateTotalCost(domesticRate);
-            } else {
-                document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + internationalRate.toFixed(2);
-                updateTotalCost(internationalRate);
-            }
+    // Function to update shipping cost based on country
+    function updateShippingCost() {
+        var country = document.getElementById('country').value;
+        var domesticRate = 3.00;  // UK shipping rate
+        var internationalRate = 5.00;  // International shipping rate
+        
+        // Check if the country is UK (GB)
+        if (country === 'GB') {
+            document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + domesticRate.toFixed(2);
+            updateTotalCost(domesticRate);
+        } else {
+            document.getElementById('shipping-cost').innerText = 'Shipping Cost: £' + internationalRate.toFixed(2);
+            updateTotalCost(internationalRate);
         }
-    
-        // Function to update total cost
-        function updateTotalCost(shippingCost) {
-            var cartTotal = parseFloat('{{ cart_total }}');
-            var totalCost = cartTotal + shippingCost;
-            document.getElementById('total-cost').innerText = 'Total Cost: £' + totalCost.toFixed(2);
-            
-            // Update total_price for PayPal
-            total_price = totalCost.toFixed(2);
-        }
-    
-        // Initial call to set shipping cost when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Here we set a default country or let it be empty
-            document.getElementById('country').value = ''; // Or set to 'GB' if you want UK as default
-            updateShippingCost();
-        });
+    }
 
-        // Function to check form validity, now using actions from PayPal
-        function checkFormValidity(actions) {
-            console.log('Checking form validity...');
-            var isFormValid = true;
-    
-            $(':input[required]').each(function(){
-                console.log('Checking:', this.id, $(this).val());
-                if($(this).val() === ''){
-                    console.log('Field', this.id, 'is empty');
-                    isFormValid = false;
-                }
-            });
-    
-            var countryValue = $('#country').val();
-            console.log('Country:', countryValue);
-            if (countryValue === '' || countryValue === null) {
-                console.log('Country not selected');
+    // Function to update total cost
+    function updateTotalCost(shippingCost) {
+        var cartTotal = parseFloat('{{ cart_total }}');
+        var totalCost = cartTotal + shippingCost;
+        document.getElementById('total-cost').innerText = 'Total Cost: £' + totalCost.toFixed(2);
+        
+        // Update total_price for PayPal
+        total_price = totalCost.toFixed(2);
+    }
+
+    // Initial call to set shipping cost when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('country').value = ''; // Or set to 'GB' if you want UK as default
+        updateShippingCost();
+    });
+
+    // Function to check form validity
+    function checkFormValidity(actions) {
+        var isFormValid = true;
+        $(':input[required]').each(function(){
+            if($(this).val() === ''){
                 isFormValid = false;
             }
-    
-            console.log('Form Validity:', isFormValid);
+        });
 
-            if (isFormValid) {
-                console.log('Enabling PayPal button');
-                actions.enable();
-            } else {
-                console.log('Disabling PayPal button');
-                actions.disable();
-            }
+        var countryValue = $('#country').val();
+        if (countryValue === '' || countryValue === null) {
+            isFormValid = false;
         }
-    
-        // PayPal script
-        paypal.Buttons({
-            // optional styling for buttons
-            // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
-            style: {
-              color: "gold",
-              shape: "pill",
-              layout: "vertical"
-            },
-    
-            onInit: function(data, actions) {
-                actions.disable(); // Start with the button disabled
 
-                // Add event listeners for form validation
-                document.getElementById('country').addEventListener('change', function() {
-                    updateShippingCost(); 
-                    checkFormValidity(actions);
-                });
+        if (isFormValid) {
+            actions.enable();
+        } else {
+            actions.disable();
+        }
+    }
 
-                document.querySelectorAll('.validate').forEach(item => {
-                    if(item.tagName.toLowerCase() !== 'select') {
-                        item.addEventListener('keyup', function() {
-                            checkFormValidity(actions);
-                        });
-                    }
-                    item.addEventListener('change', function() {
+    // PayPal script
+    paypal.Buttons({
+        // optional styling for buttons
+        style: {
+            color: "gold",
+            shape: "pill",
+            layout: "vertical"
+        },
+
+        onInit: function(data, actions) {
+            actions.disable(); // Start with the button disabled
+
+            // Add event listeners for form validation
+            document.getElementById('country').addEventListener('change', function() {
+                updateShippingCost(); 
+                checkFormValidity(actions);
+            });
+
+            document.querySelectorAll('.validate').forEach(item => {
+                if(item.tagName.toLowerCase() !== 'select') {
+                    item.addEventListener('keyup', function() {
                         checkFormValidity(actions);
                     });
+                }
+                item.addEventListener('change', function() {
+                    checkFormValidity(actions);
                 });
+            });
 
-                // Initial check on page load
-                checkFormValidity(actions);
-            },
-    
-            // set up the transaction
-            createOrder: (data, actions) => {
-                const createOrderPayload = {
-                    purchase_units: [
-                        {
-                            amount: {
-                                value: total_price
-                            }
-                        }
-                    ]
-                };
-    
-                return actions.order.create(createOrderPayload);
-            },
-    
-            // finalize the transaction
-            onApprove: (data, actions) => {
-                const captureOrderHandler = (details) => {
-                    console.log('Transaction completed');
+            // Initial check on page load
+            checkFormValidity(actions);
+        },
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '{% url "complete-order" %}',
-                        data: {
-                            name: $('#name').val(),
-                            email: $('#email').val(),
-                            address1: $('#address1').val(),
-                            address2: $('#address2').val(),
-                            city: $('#city').val(),
-                            state: $('#state').val(),
-                            zipcode: $('#zipcode').val(),
-                            country: $('#country').val(),
-                            csrfmiddlewaretoken: "{{ csrf_token }}",
-                            action: 'post'
-                        },
-                        success: function(json){
+        // set up the transaction
+        createOrder: (data, actions) => {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: total_price
+                    }
+                }]
+            });
+        },
+
+        // finalize the transaction
+        onApprove: (data, actions) => {
+            return actions.order.capture().then(details => {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "complete-order" %}',
+                    data: {
+                        name: $('#name').val(),
+                        email: $('#email').val(),
+                        address1: $('#address1').val(),
+                        address2: $('#address2').val(),
+                        city: $('#city').val(),
+                        state: $('#state').val(),
+                        zipcode: $('#zipcode').val(),
+                        country: $('#country').val(),
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+                        action: 'post'
+                    },
+                    success: function(response) {
+                        if(response.success){
                             window.location.replace("{% url 'payment-success' %}");
-                        },
-                        error: function(xhr, errmsg, err){
-                            window.location.replace("{% url 'payment-failed' %}");
+                        } else {
+                            alert(response.message);
+                            // Optionally, redirect back to checkout or show an error page
+                            // window.location.replace("{% url 'checkout' %}");
                         }
-                    });
-                };
+                    },
+                    error: function(xhr, errmsg, err){
+                        window.location.replace("{% url 'payment-failed' %}");
+                    }
+                });
+            });
+        },
 
-                return actions.order.capture().then(captureOrderHandler);
-            },
-    
-            // handle unrecoverable errors
-            onError: (err) => {
-                console.error('An error prevented the buyer from checking out with PayPal');
-            }
-        }).render("#paypal-button-container").catch((err) => {
-            console.error('PayPal Buttons failed to render', err);
-        });
-    </script>
+        // handle unrecoverable errors
+        onError: (err) => {
+            console.error('An error prevented the buyer from checking out with PayPal');
+        }
+    }).render("#paypal-button-container").catch((err) => {
+        console.error('PayPal Buttons failed to render', err);
+    });
+</script>
 
 {% endblock %}
