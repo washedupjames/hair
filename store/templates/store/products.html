@@ -3,37 +3,39 @@
 {% load static %}
 
 {% block content %}
-
+<br>
+<br>
 <!-- All products section -->
-<!-- All products section -->
-<div style="background-color: rgb(245, 240, 230);">   
+<div>   
     <div class="row justify-content-center pb-3 h4"> All products </div>
     <hr>
 </div>
 
-<div class="album" style="background-color: rgb(245, 240, 230);">   
-    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-        {% for product in my_products %}
-        <div class="col">
-            <div class="card shadow-sm">
-                <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
-                <div class="card-body">
-                    <p class="card-text">
-                        <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a>
-                        {% if not product.in_stock %}
-                        <span class="text-danger ml-2">(Out of Stock)</span>
-                        {% endif %}
-                    </p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5> £ {{ product.price }} </h5>
+<div class="album">   
+    <div class="album">
+        <div class="row row-cols-2 row-cols-md-5 g-3 justify-content-center">
+            {% for product in my_products %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a><br>
+                            {% if product.quantity == 0 %}
+                            <span class="text-danger ml-2" style="font-size: 0.8em;">Out of Stock</span>
+                            {% elif product.quantity <= 3 %}
+                            <span class="text-warning ml-2" style="font-size: 0.8em;">Only {{ product.quantity }} left</span>
+                            {% endif %}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5> £ {{ product.price }} </h5>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
-
-<!-- Removed unnecessary line breaks at the end as they're redundant with the body background color extending to the footer -->
 
 {% endblock %}

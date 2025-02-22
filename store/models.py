@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.urls import reverse
 
 class Category(models.Model):
@@ -39,7 +38,6 @@ class Product(models.Model):
 
     order = models.IntegerField(default=0)
 
-    # Add the in_stock field here
     quantity = models.IntegerField(default=0)  # Default to 0 or a positive number if you want initial stock
 
 
@@ -60,3 +58,14 @@ class Product(models.Model):
         Property to check if the product is in stock based on quantity.
         """
         return self.quantity > 0
+
+    def stock_status(self):
+        """
+        Method to return the stock status of the product.
+        """
+        if self.quantity == 0:
+            return "Out of Stock"
+        elif self.quantity <= 3:
+            return f"{self.quantity} left"
+        else:
+            return "In Stock"

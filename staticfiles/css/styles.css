@@ -80,11 +80,11 @@
 
 /* Additional styles */
 body {
-    background-color: rgb(245, 240, 230); /* Match this to your products section background */
+    background-color: rgb(224, 239, 227) /* Match this to your products section background */
 }
 
 .footer-content {
-    background-color: rgb(245, 240, 230); /* Same color as body */
+    background-color: rgb(224, 239, 227) /* Same color as body */
 }
 
 .centered-image {
@@ -134,11 +134,7 @@ body {
         justify-content: center; /* Center the content within the row for mobile */
     }
 }
-        body {
-            margin: 0; 
-            height: auto; 
-            background-color: rgb(224, 239, 227)
-        }
+        
 
         body::before {
             background-image: url('{% static "media/images/Tracyart width.jpg" %}');
@@ -342,11 +338,7 @@ body {
         /* base.html */
 
 
-        body {
-            margin: 0; 
-            height: auto; 
-            background-color: rgb(224, 239, 227)
-        }
+     
 
         body::before {
             background-image: url('{% static "media/images/Tracyart width.jpg" %}');

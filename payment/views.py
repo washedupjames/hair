@@ -11,18 +11,16 @@ from payment.models import ShippingAddress
 from django.contrib.auth.models import AnonymousUser
 
 def checkout(request):
-    # Define cart at the start of the function
     cart = Cart(request)
     subtotal = cart.get_total()
 
-    # Check if the user is authenticated
     if isinstance(request.user, AnonymousUser):
-        shipping = None  # For guest users, no shipping address from database
+        shipping = None
     else:
         try:
             shipping = ShippingAddress.objects.get(user=request.user)
         except ShippingAddress.DoesNotExist:
-            shipping = None  # Handle case where user is logged in but has no shipping address
+            shipping = None
 
     context = {
         'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID,  
@@ -34,17 +32,10 @@ def checkout(request):
         'shipping': shipping 
     }
     
-    # New: Add cart quantity to context for display
-    context['cart_quantity'] = cart.__len__()  # Assuming Cart has a __len__ method
-    
+    context['cart_quantity'] = cart.__len__()
     return render(request, 'payment/checkout.html', context=context)
 
-
 def payment_success(request):
-    # Clear shopping cart
-    cart = Cart(request)
-    cart.clear()
-    
     return render(request, 'payment/payment-success.html')
 
 def payment_failed(request):
@@ -67,15 +58,11 @@ def complete_order(request):
         cart = Cart(request)
         cart_total = cart.get_total() 
 
-        # Calculate shipping cost
-        domesticRate = Decimal('3.00')  # UK shipping rate
-        internationalRate = Decimal('5.00')  # International shipping rate
+        domesticRate = Decimal('3.00')
+        internationalRate = Decimal('5.00')
         shipping_cost = domesticRate if country == 'GB' else internationalRate
-
-        # Calculate total cost including shipping
         total_cost = cart_total + shipping_cost
 
-        # Create order for both authenticated and guest users
         order = None
         if request.user.is_authenticated:
             order = Order.objects.create(
@@ -108,10 +95,8 @@ def complete_order(request):
                     price=item['price']
                 )
 
-        # Convert cart to a readable string for emails
         cart_items = '\n'.join([f"- {item['product'].title} x {item['qty']} - £{item['price']}" for item in cart])
 
-        # Email to customer
         customer_email_subject = 'Order received'
         customer_email_body = f'''Hi!
 
@@ -127,7 +112,6 @@ Shipping: £{shipping_cost}
 Total: £{total_cost}'''
         send_mail(customer_email_subject, customer_email_body, settings.EMAIL_HOST_USER, [email], fail_silently=False)
 
-        # Email to the host
         host_email_subject = 'New Order Placed'
         host_email_body = f'''New order from {name}
 
@@ -147,16 +131,14 @@ Total: £{total_cost}'''
         except Exception as e:
             print(f"Failed to send host email: {e}")
 
-        # Clear cart after order completion
-        cart.clear()
+        # Clear cart without restoring stock post-order
+        cart.clear(restore_stock=False)
 
         order_success = True
-        # Send back the new cart quantity which should be 0 after clearing
         response = JsonResponse({'success': order_success, 'newCartQty': 0})
         return response
 
-# New function to update cart display on mobile
 def update_cart_display(request):
     cart = Cart(request)
-    cart_quantity = cart.__len__()  # Assuming Cart has a __len__ method
+    cart_quantity = cart.__len__()
     return JsonResponse({'cart_quantity': cart_quantity})

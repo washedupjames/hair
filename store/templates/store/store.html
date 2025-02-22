@@ -4,154 +4,73 @@
 
 {% block content %}
 
-<style>
-    
-    /* Your existing styles here... */
-    
-
-    /* New style to extend background color */
-    body {
-        background-color: rgb(245, 240, 230); /* Match this to your products section background */
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove default padding */
-        overflow-x: hidden; /* Prevent horizontal scrolling */
-    }
-
-    .centered-image {
-        width: 100vw; /* Ensure the container is full viewport width */
-        max-width: 100%; /* Ensure it doesn't exceed viewport width */
-        padding: 0; /* Remove any padding */
-    }
-
-    .centered-image img {
-        width: 100%; /* Full width of its container */
-        height: auto; /* Keeps aspect ratio */
-        display: block; /* Ensures it behaves as a block element */
-        margin: 0 auto; /* Centers the image */
-    }
-
-    /* For mobile devices */
-    @media (max-width: 767px) {
-        .centered-image img {
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-    }
-
-    /* For larger screens like laptops */
-    @media (min-width: 768px) {
-        .centered-image img {
-            width: 100%; /* Ensure full width */
-        }
-    }
-
-    /* Adjust album container for full width */
-   
-
-    /* Ensure no horizontal scroll for any element */
-    html, body {
-        overflow-x: hidden;
-    }
-</style>
-
 <!-- Introduction section -->
 <div class="centered-image">
     <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art">
 </div>
 
+<div>   
+    <hr>
+</div>
 
-
-
-
-
-
-
-    <div class="style="background-color: rgb(245, 240, 230);">   
-        <hr>
-        
-        
-    </div>
-
-
-            
-
-    <div class="container form-layout-wide ">
+<div class="container form-layout-wide">
+    <strong><h4>Welcome to tee’s nature oil, where we celebrate the beauty of natural hair through the power of nature.</h4></strong>
+    <p>our journey began with a simple vision: to offer hair care solutions that nurture and enhance your hair's natural health and beauty without the harsh chemicals found in many conventional products. Whether you are struggling with hair loss or thinning, split ends, damaged hair.</p>
     
-        <strong><h4>Welcome to tee’s nature oil, where we celebrate the beauty of natural hair through the power of nature.</h4></strong>
-        <p>our journey began with a simple vision: to offer hair care solutions that nurture and enhance your hair's natural health and beauty without the harsh chemicals found in many conventional products. Whether you are struggling with hair loss or thinning, split ends, damaged hair.</p>
-        
-        
-        
-        
-        <div class="video-wrapper" style="width:100%; float:left; margin-right:20px; margin-bottom: 20px;"> <!-- Float left and add right margin -->
-            <div style="padding:56.6% 0 0 0;position:relative;width:100%;">
-                <iframe 
-                    src="https://player.vimeo.com/video/1056191100?autoplay=1&loop=1&muted=1&transparent=1&controls=0&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
-                    frameborder="0" 
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
-                    style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                    title="ingredients video" 
-                    data-ready="true"
-                ></iframe>
-                <!-- Optional overlay to prevent interaction -->
-            </div>
+    <div class="video-wrapper" style="width:100%; float:left; margin-right:20px; margin-bottom: 20px;">
+        <div style="padding:56.6% 0 0 0;position:relative;width:100%;">
+            <iframe 
+                src="https://player.vimeo.com/video/1056191100?autoplay=1&loop=1&muted=1&transparent=1&controls=0&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                title="ingredients video" 
+                data-ready="true"
+            ></iframe>
         </div>
-        
-        
-            <h5>Trust our products to help repair and grow your hair.</h5>
-            <p>We believe that what you put on your hair should be as pure as the earth itself. Our products are crafted with this in mind, combining traditional wisdom with modern science. We focus on ingredients that are not only effective but also sustainable, ensuring that our footprint on the planet is as light as the touch of our products on your hair.</p>
-      
-        
-        <script src="https://player.vimeo.com/api/player.js"></script>
-        
     </div>
+    
+    <h5>Trust our products to help repair and grow your hair.</h5>
+    <p>We believe that what you put on your hair should be as pure as the earth itself. Our products are crafted with this in mind, combining traditional wisdom with modern science. We focus on ingredients that are not only effective but also sustainable, ensuring that our footprint on the planet is as light as the touch of our products on your hair.</p>
+    
+    <script src="https://player.vimeo.com/api/player.js"></script>
+</div>
 <br>
 <br>
-
-
-
-
-
-
-
-
 
 <!-- All products section -->
-<div style="background-color: rgb(245, 240, 230);">   
+<div>   
     <div class="row justify-content-center pb-3 h4"> All products </div>
     <hr>
 </div>
 
-<div class="album" style="background-color: rgb(245, 240, 230);">   
-
-    
-    <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-        {% for product in my_products %}
-        <div class="col">
-            <div class="card shadow-sm">
-                <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
-                <div class="card-body">
-                    <p class="card-text">
-                        <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a>
-                        {% if not product.in_stock %}
-                        <span class="text-danger ml-2">(Out of Stock)</span>
-                        {% endif %}
-                    </p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5> £ {{ product.price }} </h5>
+<div class="album">   
+    <div class="album">
+        <div class="row row-cols-2 row-cols-md-5 g-3 justify-content-center">
+            {% for product in my_products %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img class="img-fluid" alt="Responsive image" src="{{ product.image.url }}">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title | capfirst }}</a><br>
+                            {% if product.quantity == 0 %}
+                            <span class="text-danger ml-2" style="font-size: 0.8em;">Out of Stock</span>
+                            {% elif product.quantity <= 3 %}
+                            <span class="text-warning ml-2" style="font-size: 0.8em;">Only {{ product.quantity }} left</span>
+                            {% endif %}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5> £ {{ product.price }} </h5>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-
 </div>
 
 <!-- This container is not needed as the body background color will extend to the footer -->
-
-<br>
-<br>
-<br>
-<br>
 
 {% endblock %}

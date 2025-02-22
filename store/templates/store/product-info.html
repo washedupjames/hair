@@ -1,9 +1,26 @@
-
 {% extends "./base.html" %}
 
 {% load static %}
 
 {% block content %}
+
+<style>
+    .input-group {
+        width: 150px;
+    }
+
+    .qty-minus, .qty-plus {
+        width: 40px;
+        padding: 0;
+    }
+
+    #qty {
+        width: 70px;
+        border-left: 0;
+        border-right: 0;
+        text-align: center;
+    }
+</style>
 
 <div class="container">
 
@@ -23,11 +40,9 @@
 
                 <strong> {{product.brand }} </strong>
 
-
                 <hr>
 
                 <br>
-
 
                 <p> {{ product.description }} </p>
 
@@ -51,22 +66,12 @@
               
                             <div class="col-6">
               
-                               
-                                <label for="select">Qty</label>
-                                
-                                &nbsp; 
-                               
-                                <select id="select">
-              
-                                    <option value="1">1</option>
-              
-                                    <option value="2">2</option>
-              
-                                    <option value="3">3</option>
-              
-                                    <option value="4">4</option>
-              
-                                </select>
+                                <label for="qty">Qty</label>
+                                <div class="input-group">
+                                    <button class="btn btn-secondary qty-minus" type="button">-</button>
+                                    <input type="text" class="form-control text-center" id="qty" value="1" readonly data-max-stock="{{product.quantity}}">
+                                    <button class="btn btn-secondary qty-plus" type="button">+</button>
+                                </div>
 
                             </div>
 
@@ -116,33 +121,74 @@
       </div>
     </div>
 </div>
-
 <script>
-    // Add button
-    $(document).on('click', '#add-button', function(e){
-        e.preventDefault();
-
-        $.ajax({
-            type: 'POST',
-            url: '{% url "cart-add" %}',
-            data: {
-                product_id: $('#add-button').val(),
-                product_quantity: $('#select option:selected').text(),
-                csrfmiddlewaretoken: "{{ csrf_token }}",
-                action: 'post'
-            },
-            success: function(json){
-                document.getElementById("cart-qty").textContent = json.qty;
-                $('#cartAddedModal').modal('show');
-                
-                // Set a timeout to hide the modal after 3 seconds
-                setTimeout(function() {
-                    $('#cartAddedModal').modal('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            },
-            error: function(xhr, errmsg, err){
-                console.log(xhr.status + ": " + xhr.responseText); // Log error for debugging
+    $(document).ready(function() {
+        var qty = parseInt($('#qty').val());
+        var maxStock = parseInt($('#qty').data('max-stock')); // Use data attribute for stock
+        
+        $('.qty-minus').click(function() {
+            if (qty > 1) {
+                qty--;
+                $('#qty').val(qty);
             }
+        });
+        
+        $('.qty-plus').click(function() {
+            if (qty < maxStock) {
+                qty++;
+                $('#qty').val(qty);
+            }
+        });
+
+        // Disable the add button if quantity exceeds stock
+        function checkStock() {
+            var currentQty = parseInt($('#qty').val());
+            if (currentQty > maxStock) {
+                $('#add-button').prop('disabled', true);
+                $('#qty').val(maxStock); // Cap the quantity at max stock
+            } else {
+                $('#add-button').prop('disabled', false);
+            }
+        }
+
+        // Check stock whenever quantity changes
+        $('#qty').on('change', checkStock);
+        $('.qty-minus, .qty-plus').on('click', checkStock);
+
+        // Add button functionality
+        $(document).on('click', '#add-button', function(e){
+            e.preventDefault();
+
+            var selectedQty = parseInt($('#qty').val());
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart-add" %}',
+                data: {
+                    product_id: $(this).val(),
+                    product_quantity: selectedQty,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function(json){
+                    if (json.success) {
+                        document.getElementById("cart-qty").textContent = json.qty;
+                        $('#cartAddedModal').modal('show');
+                        
+                        // Set a timeout to hide the modal after 3 seconds
+                        setTimeout(function() {
+                            $('#cartAddedModal').modal('hide');
+                        }, 3000); // 3000 milliseconds = 3 seconds
+                    } else {
+                        console.log(json.message);
+                        alert(json.message); // Show error message to user if it's not a stock issue
+                    }
+                },
+                error: function(xhr, errmsg, err){
+                    console.log(xhr.status + ": " + xhr.responseText); // Log error for debugging
+                    alert('An unexpected error occurred. Please try again.'); // Generic error message
+                }
+            });
         });
     });
 </script>
