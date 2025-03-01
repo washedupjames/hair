@@ -22,28 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # Adjusted for correct path
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'tees-naturals.online',
     'www.tees-naturals.online', 
-    
+    '*'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.tees-naturals.online',
     'https://tees-naturals.online',
 ]
-
-# Force HTTPS and enable HSTS
-SECURE_SSL_REDIRECT = True  # Redirects all HTTP traffic to HTTPS
-SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to subdomains
-SECURE_HSTS_PRELOAD = True  # Optional: Register with HSTS preload lists
-
-# Ensure cookies are only sent over HTTPS
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 # Application definition
 INSTALLED_APPS = [
