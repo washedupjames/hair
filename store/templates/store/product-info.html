@@ -38,7 +38,7 @@
 
                 <h1 class="mb-0 h4"> {{ product.title }} </h1>
 
-                <strong> {{product.brand }} </strong>
+                <!--<strong> {{product.brand }} </strong> -->
 
                 <hr>
 
@@ -72,6 +72,11 @@
                                     <input type="text" class="form-control text-center" id="qty" value="{% if product.quantity > 0 %}1{% else %}0{% endif %}" readonly data-max-stock="{{product.quantity}}">
                                     <button class="btn btn-secondary qty-plus" type="button">+</button>
                                 </div>
+                                {% if product.quantity == 0 %}
+                                <span class="text-danger ml-2" style="font-size: 0.8em;">Out of Stock</span>
+                                {% elif product.quantity <= 3 %}
+                                <span class="text-warning ml-2" style="font-size: 0.8em;">Only {{ product.quantity }} left</span>
+                                {% endif %}
 
                             </div>
 
