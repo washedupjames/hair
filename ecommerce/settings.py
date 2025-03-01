@@ -27,7 +27,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'tees-naturals.online',
     'www.tees-naturals.online', 
-    '*'
+    
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -92,17 +92,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),  
-        'USER': env('DBUSER'),   
-        'PASSWORD': env('DBPASSWORD'),  
-        'HOST': env('DB_HOST'),  
-        'PORT': '5432',
-    }
-}
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -147,6 +137,19 @@ EMAIL_USE_TLS = 'True'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # Enter your GMAIL address
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Enter your app password 
 HOST_EMAIL = env('EMAIL_HOST_USER')
+
+
+# Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),  
+        'USER': env('DBUSER'),   
+        'PASSWORD': env('DBPASSWORD'),  
+        'HOST': env('DB_HOST'),  
+        'PORT': '5432',
+    }
+}
 
 
 # AWS configuration
