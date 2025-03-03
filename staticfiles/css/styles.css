@@ -23,8 +23,6 @@
     }
 }
 
-
-
 /* Store layout, similar to .form-layout but with a different class name */
 .form-layout-wide {
     border-radius: 20px;
@@ -45,14 +43,13 @@
     /* If content width causes issues, ensure it doesn't exceed container width */
     box-sizing: border-box;
 }
-/* Mobile adjustments for .layout - Note: This was missing in your original CSS */
+/* Mobile adjustments for .form-layout-wide */
 @media (max-width: 767px) {
     .form-layout-wide {
         padding-left: 10px !important;
         padding-right: 10px !important;
         max-width: calc(100% - 20px); /* adjust max-width to account for padding */
         width: 95%;
-        
     }
 }
 
@@ -78,461 +75,353 @@
     }
 }
 
-/* Additional styles */
+.card.shadow-sm {
+    min-height: 350px; /* Maintain fixed height for vertical balance and centering */
+    width: 250px; /* Fixed width for small screens */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto; /* Keep cards centered horizontally */
+}
+
+.card.shadow-sm img.img-fluid {
+    width: 100%;
+    height: auto; /* Allow natural image height, showing the entire image */
+    min-width: 100%; /* Ensure image fills card width */
+}
+
+.card.shadow-sm .card-body {
+    flex-grow: 1; /* Ensure .card-body fills remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Keep titles at the top, prices at the bottom */
+    padding: 10px; /* Default for small screens */
+}
+
+.card.shadow-sm .card-body .card-text {
+    margin: 0; /* Remove default margins on <p> to ensure consistent title placement */
+}
+
+.card.shadow-sm .card-body .stock-info {
+    margin-top: 5px;
+    display: block;
+}
+
+.card.shadow-sm .card-body h5 {
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.card.shadow-sm .card-body .price-container {
+    margin-top: 0; /* Remove gap to keep prices at the bottom */
+    align-items: flex-end;
+}
+
+.album .col {
+    display: flex;
+    justify-content: center; /* Keep cards centered within columns */
+    padding: 5px; /* Default for small screens */
+}
+
+/* Default Bootstrap gutter (.g-3) for all screens unless overridden */
+.row.g-3 {
+    --bs-gutter-x: 16px; /* 1rem = 16px */
+    --bs-gutter-y: 16px;
+}
+
+/* Force 2 columns on small screens (<768px) with fixed width and centering */
+@media (max-width: 767px) {
+    .album .col {
+        flex: 0 0 250px !important; /* Ensure 250px width for 2 columns */
+        max-width: 250px !important;
+    }
+    .row.row-cols-2 {
+        --bs-row-cols: 2 !important; /* Explicitly force 2 columns on small screens */
+    }
+}
+
+/* Override for larger screens with forced margins if needed, but preserve .g-3 behavior unless specified */
+@media (min-width: 768px) {
+    .card.shadow-sm {
+        width: 250px !important;
+        min-height: 350px; /* Maintain fixed height for vertical balance */
+        margin: 10px 10px; /* Preserve your working 20px total gaps (10px + 10px) */
+    }
+    .card.shadow-sm .card-body {
+        padding: 8px;
+    }
+    .album .col {
+        flex: 0 0 250px !important;
+        max-width: 250px !important;
+        padding: 5px;
+    }
+    .row.row-cols-md-5 {
+        --bs-row-cols: 3 !important; /* Force 3 columns, but defaults to 2 with only 2 cards */
+        --bs-gutter-x: 16px !important; /* Preserve .g-3 gaps unless overridden by margins */
+        --bs-gutter-y: 16px !important; /* Preserve .g-3 gaps unless overridden by margins */
+        margin-left: 0 !important; /* Reset margin to avoid conflicts */
+        margin-right: 0 !important; /* Reset margin to avoid conflicts */
+        justify-content: center; /* Ensure centered on larger screens */
+    }
+    .album {
+        width: 80%; /* Matches .centered-image img’s 80% width */
+        max-width: 90%; /* Match your working version for centering */
+        margin: 0 auto; /* Centers the container */
+        padding: 0; /* Remove padding to prevent right gap */
+        box-sizing: border-box; /* Ensures padding is included in the width */
+    }
+}
+
 body {
-    background-color: rgb(224, 239, 227) /* Match this to your products section background */
+    background-color: rgb(224, 239, 227); /* Match this to your products section background */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    margin: 0; /* Remove default body margins */
+    padding: 0; /* Remove default body padding */
 }
 
 .footer-content {
-    background-color: rgb(224, 239, 227) /* Same color as body */
+    background-color: rgb(224, 239, 227); /* Same color as body */
+    text-align: center;
 }
 
 .centered-image {
     text-align: center;
-    width: 100vw; /* Full viewport width */
-    padding: 0;
+    width: 100vw; /* Ensure the container is full viewport width, restoring your working setup */
+    max-width: 100%; /* Ensure it doesn't exceed viewport width */
+    padding: 0; /* Remove any padding */
+    margin: 0 auto; /* Ensure centered */
 }
 
 .centered-image img {
-    width: 100vw; /* Full viewport width */
+    width: 100%; /* Full width of its container, but maintain centering */
     height: auto; /* Keeps aspect ratio */
     display: block; /* Ensures it behaves as a block element */
     margin: 0 auto; /* Centers the image */
 }
 
-/* Mobile adjustments for images */
-@media (max-width: 767px) {
-    .centered-image img {
-        box-sizing: border-box; /* Ensure padding is included in the max-width */
-    }
-}
-
-/* Larger screens adjustments for images */
-@media (min-width: 768px) {
-    .centered-image img {
-        max-width: 1900px; /* Adjust to a reasonable value */
-    }
-}
-
-//* For larger screens */
-.album {
-    max-width: 90%; /* This allows for some margin on larger screens */
-    margin: 0 auto; /* Centers the container */
-    padding: 0 15px; /* Adds some padding for larger screens */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
-
 /* For mobile devices */
 @media (max-width: 767px) {
+    .centered-image img {
+        box-sizing: border-box; /* Ensure padding is included in the width */
+    }
     .album {
         width: 100%; /* Full width on small screens */
-        padding: 0 10px; /* Adds padding for mobile */
+        padding: 0; /* Remove padding to prevent right gap */
         box-sizing: border-box; /* Ensures padding is included in the width */
+        margin: 0 auto; /* Ensure centered on mobile */
     }
-    
     .album .row {
         justify-content: center; /* Center the content within the row for mobile */
     }
 }
-        
 
-        body::before {
-            background-image: url('{% static "media/images/Tracyart width.jpg" %}');
-            opacity: 0.1;
-        }
+/* For larger screens like laptops */
+@media (min-width: 768px) {
+    .centered-image img {
+        width: 80%; /* Ensure full width within 80% for larger screens, maintaining centering */
+    }
+    .album {
+        max-width: 90%; /* This allows for some margin on larger screens */
+        margin: 0 auto; /* Centers the container */
+        padding: 0; /* Remove padding to prevent right gap */
+        box-sizing: border-box; /* Ensures padding is included in the width */
+    }
+}
 
-        .navbar {
-            padding: 0;
-            flex-direction: column;
-            align-items: center;
-            background-color: #E9E9E9;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        .navbar-brand {
-            margin: 10px 0;
-        }
+/* Ensure no horizontal scroll for any element */
+html, body {
+    overflow-x: hidden; /* Restore your working setup to prevent horizontal overflow */
+}
 
-        .navbar-nav {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-        }
-        .navbar-nav .nav-item {
-            margin: 0 5px;
-        }
-        .navbar-nav .btn {
-            padding: 0.25rem 0.5rem;
-        }
+body::before {
+    background-image: url('{% static "media/images/Tracyart width.jpg" %}');
+    opacity: 0.1;
+}
 
-        .cart-counter {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            z-index: 1;
-        }
+.navbar {
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E9E9E9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.navbar-brand {
+    margin: 10px 0;
+}
 
-        @media (max-width: 991.98px) {
-            .navbar .navbar-collapse {
-                margin-right: 0;
-            }
-            .navbar-nav {
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-            }
-            .navbar-nav .nav-item {
-                margin: 5px 0;
-            }
-            .navbar-toggler {
-                position: absolute;
-                left: 15px;
-                top: 15px;
-                z-index: 1;
-            }
-            .center-nav {
-                flex-direction: column;
-            }
-            .dropdown-left {
-                display: none;
-            }
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+.navbar-nav .nav-item {
+    margin: 0 5px;
+}
+.navbar-nav .btn {
+    padding: 0.25rem 0.5rem;
+}
 
-            .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
-                display: block;
-                padding: 0.5rem 1rem;
-                color: #4a4a4a;
-                text-decoration: none;
-                background-color: transparent;
-                border: none;
-                font-weight: 600;
-                font-size: 1.1rem;
-                transition: all 0.3s ease;
-            }
-            .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
-                color: #7a5230;
-                transform: scale(1.05);
-            }
+.cart-counter {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 1;
+}
 
-            .navbar-brand img {
-                height: 100px !important;
-                max-height: 100px !important;
-                width: auto;
-            }
-            
-            .jtek {
-                width: 14%;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
+@media (max-width: 991.98px) {
+    .navbar .navbar-collapse {
+        margin-right: 0;
+    }
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+    }
+    .navbar-toggler {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        z-index: 1;
+    }
+    .center-nav {
+        flex-direction: column;
+    }
+    .dropdown-left {
+        display: none;
+    }
 
-            /* Uniform style for mobile dropdown items */
-            .navbar-nav.d-lg-none .nav-item a, 
-            .navbar-nav.d-lg-none .nav-item .btn {
-                color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
-                font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
-                font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
-                text-decoration: none !important;
-                background-color: transparent !important;
-                border: none !important;
-                padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
-                margin: 0 5px !important;
-                display: block !important; /* Ensure block display for consistency */
-                transition: all 0.3s ease !important;
-            }
-            .navbar-nav.d-lg-none .nav-item a:hover, 
-            .navbar-nav.d-lg-none .nav-item .btn:hover {
-                color: #7a5230 !important; /* Match hover color */
-                transform: scale(1.05) !important; /* Match hover effect */
-            }
-        }
+    .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #4a4a4a;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
+        color: #7a5230;
+        transform: scale(1.05);
+    }
 
-        @media (min-width: 992px) {
-            .navbar-nav {
-                flex-direction: row;
-                margin-top: 10px;
-            }
-            
-            .dropdown-left {
-                position: absolute;
-                left: 0;
-                top: 15px;
-                z-index: 1;
-            }
+    .navbar-brand img {
+        height: 100px !important;
+        max-height: 100px !important;
+        width: auto;
+    }
+    
+    .jtek {
+        width: 14%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
 
-            .dropdown-left .dropdown-menu {
-                left: 0 !important;
-                right: auto !important;
-                background-color: transparent;
-                border: none;
-            }
+    /* Uniform style for mobile dropdown items */
+    .navbar-nav.d-lg-none .nav-item a, 
+    .navbar-nav.d-lg-none .nav-item .btn {
+        color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
+        font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
+        font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
+        text-decoration: none !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
+        margin: 0 5px !important;
+        display: block !important; /* Ensure block display for consistency */
+        transition: all 0.3s ease !important;
+    }
+    .navbar-nav.d-lg-none .nav-item a:hover, 
+    .navbar-nav.d-lg-none .nav-item .btn:hover {
+        color: #7a5230 !important; /* Match hover color */
+        transform: scale(1.05) !important; /* Match hover effect */
+    }
+}
 
-            .dropdown-left .dropdown-item {
-                padding: 0.5rem 1rem;
-                color: #4a4a4a;
-                text-decoration: none;
-                background-color: transparent;
-                border: none;
-                font-weight: 600;
-                font-size: 1.1rem;
-                transition: all 0.3s ease;
-            }
-            .dropdown-left .dropdown-item:hover {
-                color: #7a5230;
-                transform: scale(1.05);
-            }
+@media (min-width: 992px) {
+    .navbar-nav {
+        flex-direction: row;
+        margin-top: 10px;
+    }
+    
+    .dropdown-left {
+        position: absolute;
+        left: 0;
+        top: 15px;
+        z-index: 1;
+    }
 
-            .navbar-nav.center-nav {
-                display: flex;
-                margin-bottom: 20px;
-            }
-            .navbar-nav.center-nav .nav-item a {
-                display: inline-block;
-                padding: 10px 20px;
-                color: #557a95;
-                text-decoration: none;
-                background-color: transparent; 
-                border: none;
-                font-weight: bold;
-                font-size: 1.2rem;
-                margin: 0 5px;
-                transition: all 0.3s ease;
-            }
-            .navbar-nav.center-nav .nav-item a:hover {
-                text-decoration: underline;
-                color: black;
-            }
-            .navbar-nav.center-nav .nav-item a.active,
-            .navbar-nav.center-nav .nav-item .navbar-btn.active {
-                color: black !important;
-                text-decoration: underline !important;
-            }
+    .dropdown-left .dropdown-menu {
+        left: 0 !important;
+        right: auto !important;
+        background-color: transparent;
+        border: none;
+    }
 
-            .navbar-nav:not(.center-nav) {
-                display: none;
-            }
+    .dropdown-left .dropdown-item {
+        padding: 0.5rem 1rem;
+        color: #4a4a4a;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    .dropdown-left .dropdown-item:hover {
+        color: #7a5230;
+        transform: scale(1.05);
+    }
 
-            .navbar-brand img {
-                height: 150px;
-                width: auto;
-            }
-            
-            .jtek {
-                width: 6%;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
-        }
+    .navbar-nav.center-nav {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .navbar-nav.center-nav .nav-item a {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #557a95;
+        text-decoration: none;
+        background-color: transparent; 
+        border: none;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+    .navbar-nav.center-nav .nav-item a:hover {
+        text-decoration: underline;
+        color: black;
+    }
+    .navbar-nav.center-nav .nav-item a.active,
+    .navbar-nav.center-nav .nav-item .navbar-btn.active {
+        color: black !important;
+        text-decoration: underline !important;
+    }
 
-        .footer-content {
-            text-align: center;
-            
-        }
+    .navbar-nav:not(.center-nav) {
+        display: none;
+    }
 
-
-
-        /* base.html */
-
-
-     
-
-        body::before {
-            background-image: url('{% static "media/images/Tracyart width.jpg" %}');
-            opacity: 0.1;
-        }
-
-        .navbar {
-            padding: 0;
-            flex-direction: column;
-            align-items: center;
-            background-color: #E9E9E9;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        .navbar-brand {
-            margin: 10px 0;
-        }
-
-        .navbar-nav {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-        }
-        .navbar-nav .nav-item {
-            margin: 0 5px;
-        }
-        .navbar-nav .btn {
-            padding: 0.25rem 0.5rem;
-        }
-
-        .cart-counter {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            z-index: 1;
-        }
-
-        @media (max-width: 991.98px) {
-            .navbar .navbar-collapse {
-                margin-right: 0;
-            }
-            .navbar-nav {
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-            }
-            .navbar-nav .nav-item {
-                margin: 5px 0;
-            }
-            .navbar-toggler {
-                position: absolute;
-                left: 15px;
-                top: 15px;
-                z-index: 1;
-            }
-            .center-nav {
-                flex-direction: column;
-            }
-            .dropdown-left {
-                display: none;
-            }
-
-            .navbar-nav .nav-item a, .navbar-nav .nav-item .btn {
-                display: block;
-                padding: 0.5rem 1rem;
-                color: #4a4a4a;
-                text-decoration: none;
-                background-color: transparent;
-                border: none;
-                font-weight: 600;
-                font-size: 1.1rem;
-                transition: all 0.3s ease;
-            }
-            .navbar-nav .nav-item a:hover, .navbar-nav .nav-item .btn:hover {
-                color: #7a5230;
-                transform: scale(1.05);
-            }
-
-            .navbar-brand img {
-                height: 100px !important;
-                max-height: 100px !important;
-                width: auto;
-            }
-            
-            .jtek {
-                width: 14%;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
-
-            /* Uniform style for mobile dropdown items */
-            .navbar-nav.d-lg-none .nav-item a, 
-            .navbar-nav.d-lg-none .nav-item .btn {
-                color: #4a4a4a !important; /* Match 'Login' and 'Register' color */
-                font-weight: 600 !important; /* Match 'Login' and 'Register' font weight */
-                font-size: 1.1rem !important; /* Match 'Login' and 'Register' font size */
-                text-decoration: none !important;
-                background-color: transparent !important;
-                border: none !important;
-                padding: 0.5rem 1rem !important; /* Match 'Login' and 'Register' padding */
-                margin: 0 5px !important;
-                display: block !important; /* Ensure block display for consistency */
-                transition: all 0.3s ease !important;
-            }
-            .navbar-nav.d-lg-none .nav-item a:hover, 
-            .navbar-nav.d-lg-none .nav-item .btn:hover {
-                color: #7a5230 !important; /* Match hover color */
-                transform: scale(1.05) !important; /* Match hover effect */
-            }
-        }
-
-        @media (min-width: 992px) {
-            .navbar-nav {
-                flex-direction: row;
-                margin-top: 10px;
-            }
-            
-            .dropdown-left {
-                position: absolute;
-                left: 0;
-                top: 15px;
-                z-index: 1;
-            }
-
-            .dropdown-left .dropdown-menu {
-                left: 0 !important;
-                right: auto !important;
-                background-color: transparent;
-                border: none;
-            }
-
-            .dropdown-left .dropdown-item {
-                padding: 0.5rem 1rem;
-                color: #4a4a4a;
-                text-decoration: none;
-                background-color: transparent;
-                border: none;
-                font-weight: 600;
-                font-size: 1.1rem;
-                transition: all 0.3s ease;
-            }
-            .dropdown-left .dropdown-item:hover {
-                color: #7a5230;
-                transform: scale(1.05);
-            }
-
-            .navbar-nav.center-nav {
-                display: flex;
-                margin-bottom: 20px;
-            }
-            .navbar-nav.center-nav .nav-item a {
-                display: inline-block;
-                padding: 10px 20px;
-                color: #557a95;
-                text-decoration: none;
-                background-color: transparent; 
-                border: none;
-                font-weight: bold;
-                font-size: 1.2rem;
-                margin: 0 5px;
-                transition: all 0.3s ease;
-            }
-            .navbar-nav.center-nav .nav-item a:hover {
-                text-decoration: underline;
-                color: black;
-            }
-            .navbar-nav.center-nav .nav-item a.active,
-            .navbar-nav.center-nav .nav-item .navbar-btn.active {
-                color: black !important;
-                text-decoration: underline !important;
-            }
-
-            .navbar-nav:not(.center-nav) {
-                display: none;
-            }
-
-            .navbar-brand img {
-                height: 150px;
-                width: auto;
-            }
-            
-            .jtek {
-                width: 6%;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
-        }
-
-        .footer-content {
-            text-align: center;
-            
-        }
+    .navbar-brand img {
+        height: 150px;
+        width: auto;
+    }
+    
+    .jtek {
+        width: 6%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}

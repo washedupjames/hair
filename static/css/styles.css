@@ -26,7 +26,7 @@
 /* Store layout, similar to .form-layout but with a different class name */
 .form-layout-wide {
     border-radius: 20px;
-    width: 90%;
+    width: 70%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
@@ -37,8 +37,7 @@
     transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
     transition: all 0.3s ease;
     position: relative;
-    /* Remove overflow property */
-    /* Ensure content fits by adjusting height */
+    overflow: hidden;
     height: auto;
     /* If content width causes issues, ensure it doesn't exceed container width */
     box-sizing: border-box;
@@ -165,6 +164,7 @@
         justify-content: center; /* Ensure centered on larger screens */
     }
     .album {
+        width: 80%; /* Matches .centered-image img’s 80% width */
         max-width: 90%; /* Match your working version for centering */
         margin: 0 auto; /* Centers the container */
         padding: 0; /* Remove padding to prevent right gap */
@@ -215,10 +215,28 @@ body {
     }
 }
 
+.right-image {
+    width: 360px; /* Default for large screens */
+    height: auto;
+    float: right;
+    margin: 0 0 10px 10px;
+}
+
+@media (max-width: 767px) {
+    .right-image {
+        width: 100%; /* Scales to container width on mobile */
+        max-width: 200px; /* Optional: caps it at 200px so it’s not too big */
+        min-width: 230px;
+        height: auto; /* Keeps aspect ratio */
+        float: right; /* Stays floated right */
+        margin: 0 0 10px 10px; /* Keeps spacing */
+    }
+}
+
 /* For larger screens like laptops */
 @media (min-width: 768px) {
     .centered-image img {
-        width: 80%; /* Ensure full width within 80% for larger screens, maintaining centering */
+        width: 70%; /* Ensure full width within 80% for larger screens, maintaining centering */
     }
     .album {
         max-width: 90%; /* This allows for some margin on larger screens */
