@@ -236,7 +236,7 @@ body {
 /* For larger screens like laptops */
 @media (min-width: 768px) {
     .centered-image img {
-        width: 70%; /* Ensure full width within 80% for larger screens, maintaining centering */
+        width: 40%; /* Ensure full width within 80% for larger screens, maintaining centering */
     }
     .album {
         max-width: 90%; /* This allows for some margin on larger screens */

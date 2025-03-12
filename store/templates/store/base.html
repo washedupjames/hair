@@ -7,7 +7,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8"/>
-    <title>Naturals</title>
+    <title>{% block title %}Tee's Naturals{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Welcome to Tee's Naturals - Your source for natural products{% endblock %}">
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
@@ -83,7 +85,7 @@
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a href="{% url 'dashboard' %}" class="navbar-btn {% if request.path|slice:":18" == "/account/dashboard" %}active{% endif %}">
-                        <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+                         Dashboard
                     </a>
                 </li>
             {% endif %}
