@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # Adjusted for correct path
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'tees-naturals.online',
     'www.tees-naturals.online', 
-    '*'
+    
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -150,7 +150,7 @@ DATABASES = {
     }
 }
 
-'''
+
 # AWS configuration
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')  
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')  
@@ -167,4 +167,4 @@ STORAGES = {
 }
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE = False
-'''
+
