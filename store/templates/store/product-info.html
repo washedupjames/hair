@@ -108,24 +108,40 @@
 </div>
 
 <div class="modal fade" id="cartAddedModal" tabindex="-1" role="dialog" aria-labelledby="cartAddedModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cartAddedModalLabel">Item Added to Cart</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>The item has been successfully added to your cart.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{% url 'cart-summary' %}" class="btn btn-primary">View Cart</a>
+        <div class="modal-header d-flex align-items-center p-2 pr-1">
+          <h5 class="modal-title m-0 mr-1" id="cartAddedModalLabel">Item Added to Cart</h5>
+          <a href="{% url 'cart-summary' %}" class="btn btn-primary btn-sm">View Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i> </a>
         </div>
       </div>
     </div>
 </div>
+
+<style>
+  .modal-content {
+    background: linear-gradient(to right, #ff0000, #000000); /* Apply gradient to entire modal-content */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Keep rounded corners */
+    box-shadow: none; /* Remove default shadow if it’s causing a border effect */
+  }
+  .modal-header {
+    padding: 8px 4px 8px 12px; /* Left: 12px, Right: 4px, Top/Bottom: 8px */
+    border-bottom: none; /* Remove the default bottom border of modal-header */
+    background: none; /* Remove the gradient from modal-header since it’s on modal-content now */
+  }
+  .btn-sm {
+    padding: 0.25rem 0.5rem; /* Smaller button */
+  }
+  .modal-title {
+    margin-right: 3px !important; /* 3px gap between text and button */
+    color: #ffffff; /* Black text for contrast */
+  }
+  .modal-dialog.modal-sm {
+    max-width: fit-content; /* Shrink modal width to content */
+  }
+</style>
+
 <script>
     $(document).ready(function() {
     var maxStock = parseInt($('#qty').data('max-stock'));

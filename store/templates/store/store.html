@@ -5,19 +5,155 @@
 {% block content %}
 
 
-<!-- Introduction section -->
-<div class="centered-image">
-    <img src="{% static 'media/images/Tracyart width.jpg' %}" alt="Description of Tracy's Art">
+
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{% static 'media/images/Tracyart width(blackBG).jpg' %}" alt="Description of Tracy's Art">
+      </div>
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="{% static 'media/images/size 16 9  ingredience.jpg' %}" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{% static 'media/images/placeholder.jpg' %}" alt="Third slide">
+      </div>
+    </div>
 </div>
 
-<div>   
-    <hr>
-</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var myCarousel = document.querySelector('#carouselExampleSlidesOnly');
+    if (myCarousel) { // Check if it exists to avoid errors on mobile
+      var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 5000,
+        wrap: true
+      });
+    }
+  });
+</script>
+
+<!-- Medium Screen Carousel (≥576px and <992px) -->
+    <div id="carouselMedium" class="carousel slide d-none d-sm-block d-lg-none" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'media/images/medium_image1.jpg' %}" alt="Medium Slide 1">
+          </div>
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="{% static 'media/images/medium_image2.jpg' %}" alt="Medium Slide 2">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'media/images/medium_image3.jpg' %}" alt="Medium Slide 3">
+          </div>
+        </div>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var mediumCarousel = document.querySelector('#carouselMedium');
+        if (mediumCarousel) {
+          var carousel = new bootstrap.Carousel(mediumCarousel, {
+            interval: 4000, // 4 seconds for medium screens
+            wrap: true
+          });
+        }
+      });
+    </script>
+    
+    <!-- Small Mobile Screen Carousel (<576px) -->
+    <div id="carouselSmallMobile" class="carousel slide d-sm-none" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'media/images/Tracyart width.jpg' %}" alt="Small Mobile Slide 1">
+          </div>
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="{% static 'media/images/small_mobile2.jpg' %}" alt="Small Mobile Slide 2">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'media/images/small_mobile3.jpg' %}" alt="Small Mobile Slide 3">
+          </div>
+        </div>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var smallMobileCarousel = document.querySelector('#carouselSmallMobile');
+        if (smallMobileCarousel) {
+          var carousel = new bootstrap.Carousel(smallMobileCarousel, {
+            interval: 3000, // 3 seconds for small mobile
+            wrap: true
+          });
+        }
+      });
+    </script>
+
+
+ 
+ <!-- Introduction section -->
+ 
+
+
+<br>
 
 <div class="container form-layout-wide">
-    <strong><h4>Welcome to tee’s nature oil, where we celebrate the beauty of natural hair through the power of nature.</h4></strong>
-    <p style="font-size: 18px;">our journey began with a simple vision: to offer hair care solutions that nurture and enhance your hair's natural health and beauty without the harsh chemicals found in many conventional products. Whether you are struggling with hair loss or thinning, split ends, damaged hair.</p>
+
     
+    <center><h4> About me and my products </h4></center>
+    <hr>
+    <br>
+
+
+    <img src="{% static 'media/images/t1.jpg' %}" alt="Hair care image" class="left-image">
+
+    <strong><h3>Welcome to tee’s nature oil, where we celebrate the beauty of natural hair through the power of nature.</h3></strong>
+<br>
+<p style="font-size: 20px;">Our journey began with a simple vision: to offer hair care solutions that nurture and enhance your hair's natural health and beauty without the harsh chemicals found in many conventional products. Whether you are struggling with hair loss or thinning, split ends, damaged hair.</p>
+
+        <br>
+        <br>
+
+
+        <strong><h3>Trust our products to help repair and grow your hair.</h3></strong>
+        <br>
+        <img src="{% static 'media/images/Tracy real2.jpg' %}" alt="Hair care image" class="right-image">
+
+<p style="font-size: 20px;">We believe that what you put on your hair should be as pure as the earth itself. Our products are crafted with this in mind, combining traditional wisdom with modern science. We focus on ingredients that are not only effective but also sustainable, ensuring that our footprint on the planet is as light as the touch of our products on your hair.</p>
+<br>
+<br>
+<br>
+
+
+<strong><h3>        Hair oils are made from natural herbs, essential oils, and medicinal plants that nourish the scalp and promote hair health. Here are some key benefits:
+</h3></strong>
+<br>
+    
+    
+<p style="font-size: 20px;">
+        
+        <strong> Promotes Hair Growth </strong><br>
+        Ingredients like Bhringraj, Amla, and Brahmi stimulate hair follicles, encouraging thicker and longer hair growth. <br>
+        <br>
+        <strong> Reduces Hair Fall </strong><br>
+            Strengthens hair roots with herbal extracts such as Neem, Hibiscus, and Ashwagandha, reducing breakage and hair loss.<br>
+        <br>
+        <strong>Prevents Dandruff & Scalp Infections</strong><br>
+            Anti-inflammatory and antifungal properties of Neem, Tea Tree Oil, and Fenugreek help control dandruff, itchiness, and scalp infections.<br>
+        <br>
+        
+        <strong>Delays Premature Graying</strong><br>
+            Herbs like Amla and Henna help maintain natural hair color by preventing premature graying.<br>
+            <br>
+        <strong>Nourishes & Strengthens Hair</strong><br>
+            Rich in essential fatty acids and vitamins from Coconut Oil, Sesame Oil, and Almond Oil, which deeply nourish and strengthen hair strands.<br>
+            <br>
+        <strong>Improves Blood Circulation</strong><br>
+            Massaging the scalp with Ayurvedic oils enhances blood flow, ensuring better oxygen and nutrient supply to hair follicles.<br>
+            <br>
+        <strong>Adds Shine & Softness</strong><br>
+            Natural ingredients like Aloe Vera, Hibiscus, and Castor Oil make hair soft, silky, and manageable.
+        </p>
+
     <div class="video-wrapper" style="width:100%; float:left; margin-right:20px; margin-bottom: 20px;">
         <div style="padding:56.6% 0 0 0;position:relative;width:100%;">
             <iframe 
@@ -32,8 +168,7 @@
     </div>
 
     
-    <h5>Trust our products to help repair and grow your hair.</h5>
-    <p style="font-size: 18px;">We believe that what you put on your hair should be as pure as the earth itself. Our products are crafted with this in mind, combining traditional wisdom with modern science. We focus on ingredients that are not only effective but also sustainable, ensuring that our footprint on the planet is as light as the touch of our products on your hair.</p>
+  
     
     <script src="https://player.vimeo.com/api/player.js"></script>
 </div>
@@ -43,7 +178,7 @@
 <!-- All products section -->
 <div>   
     <div class="row justify-content-center pb-3 h4"> All products </div>
-    <hr>
+  
 </div>
 
 <div class="album">   

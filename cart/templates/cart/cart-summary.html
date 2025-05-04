@@ -1,207 +1,195 @@
 {% extends "store/base.html" %}
-
 {% load static %}
 {% load mathfilters %}
 
 {% block content %}
 
 <main class="pt-5">
-    
     <div class="container">
-      
-      <h1 class="h5"> Shopping cart </h1>
-
-      <hr>
-
-      {% for item in cart %}
-
-      {% with product=item.product %}
-      
-      <br>
-
-      <div class="row mb-4 border product-item" data-product-id="{{ product.id }}" data-product-price="{{ product.price }}" data-product-stock="{{ product.quantity }}" data-total-stock="{{ product.quantity|add:item.qty }}">
-        
-        <div class="col-md-3 col-lg-2 order-md-first bg-light">
-        
-            <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{product.image.url}}"> <!-- Product image -->
-        
+        <h1 class="h5">Shopping Cart</h1>
+        <hr>
+        <!-- Message when cart is empty -->
+        <div id="empty-cart-message" style="display: {% if cart_quantity > 0 %}none{% else %}block{% endif %}; text-align: center;">
+            <br>
+            <p style="font-weight: bold;">Your cart is empty. Add some items to proceed.</p>
         </div>
 
-        
-        <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
-          
-          <a href="{{product.get_absolute_url}}" class="text-info text-decoration-none "> <!-- Product get absolute url -->
-          
-            <h1 class="h5 pt-2"> {{product.title}} </h1>
-          
-          </a>
-          
-          <div class="border">
-            
-            <div class="col border-bottom">
-              
-                <div class="row p-3">
-              
-                <div class="col-6"> Product </div>
-              
-                <div class="col-6 text-end"><span class="h6 fw-bold" id="price_{{ product.id }}">£ {{product.price|mul:item.qty}}</span></div>
-            
-              </div>
-            
-            </div>
-            
-            <div class="col">
-              
-              <div class="row p-3">
-                
-                <div class="col-12">
-                  
-                  <label for="qty_{{ product.id }}">Qty</label>
-                  <div class="input-group" style="width: 150px;">
-                    <button class="btn btn-secondary qty-minus" data-product-id="{{ product.id }}" type="button">-</button>
-                    <input type="text" class="form-control text-center" id="qty_{{ product.id }}" value="{{ item.qty }}" readonly>
-                    <button class="btn btn-secondary qty-plus" data-product-id="{{ product.id }}" type="button">+</button>
-                  </div>
-                  
-                  <br> <br>
-
-                  
-                  
-                  <button type="button" data-index="{{product.id}}"
-                    class="btn btn-danger btn-sm delete-button">
-                    Delete
-                  </button>
-        
+        {% for item in cart %}
+            {% with product=item.product %}
+            <br>
+            <div class="row mb-4 border product-item" data-product-id="{{ product.id }}" data-product-price="{{ product.price }}" data-product-stock="{{ product.quantity }}" data-total-stock="{{ product.quantity|add:item.qty }}">
+                <div class="col-md-3 col-lg-2 order-md-first bg-light">
+                    <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}"> <!-- Product image -->
                 </div>
-        
+                <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+                    <a href="{{ product.get_absolute_url }}" class="text-info text-decoration-none">
+                        <h1 class="h5 pt-2">{{ product.title }}</h1>
+                    </a>
+                    <div class="border">
+                        <div class="col border-bottom">
+                            <div class="row p-3">
+                                <div class="col-6">Product</div>
+                                <div class="col-6 text-end"><span class="h6 fw-bold" id="price_{{ product.id }}">£ {{ product.price|mul:item.qty }}</span></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row p-3">
+                                <div class="col-12">
+                                    <label for="qty_{{ product.id }}">Qty</label>
+                                    <div class="input-group" style="width: 150px;">
+                                        <button class="btn btn-secondary qty-minus" data-product-id="{{ product.id }}" type="button">-</button>
+                                        <input type="text" class="form-control text-center" id="qty_{{ product.id }}" value="{{ item.qty }}" readonly>
+                                        <button class="btn btn-secondary qty-plus" data-product-id="{{ product.id }}" type="button">+</button>
+                                    </div>
+                                    <br><br>
+                                    <button type="button" data-index="{{ product.id }}" class="btn btn-danger btn-sm delete-button">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        
-            </div>
-    
-            </div>
-    
+            {% endwith %}
+        {% endfor %}
+
+        <div class="col-12 text-end">
+            <div class="h6 fw-bold">Sub total: £ <div id="total" class="d-inline-flex">{{ cart.get_total }}</div></div>
+
+            <!-- Modified: Proceed to Checkout button with conditional disabling -->
+            <a href="{% url 'checkout' %}" id="proceed-checkout" class="btn btn-primary my-2 {% if cart_quantity == 0 %}disabled{% endif %}" {% if cart_quantity == 0 %}aria-disabled="true"{% endif %}>
+                <i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Proceed to Checkout
+            </a>
+
+            
         </div>
-      
+
+        <br><br>
     </div>
+</main>
 
-    {% endwith %}
+<script>
+    // Function to update price and total
+    function updatePriceAndTotal(productId, qty) {
+        var pricePerItem = parseFloat($('[data-product-id="' + productId + '"]').data('product-price'));
+        var newPrice = pricePerItem * qty;
+        $('#price_' + productId).text('£' + newPrice.toFixed(2));
 
-    {% endfor %}
-
-      <div class="col-12 text-end">
- 
-        <div class="h6 fw-bold"> Sub total: £ <div id="total" class="d-inline-flex"> {{cart.get_total}} </div></div>
-
-        <a href="{% url 'checkout' %}" class="btn btn-primary my-2"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>   Proceed to checkout </a>
-
-      </div>
-
-    <br>
-    <br>
-
- </main>
-
- <script>
-
-  // Function to update price and total
-  function updatePriceAndTotal(productId, qty) {
-    var pricePerItem = parseFloat($('[data-product-id="' + productId + '"]').data('product-price'));
-    var newPrice = pricePerItem * qty;
-    $('#price_' + productId).text('£' + newPrice.toFixed(2));
-
-    // Recalculate total
-    var total = 0;
-    $('.product-item').each(function() {
-      var itemQty = parseInt($(this).find('input[id^="qty_"]').val());
-      var itemPrice = parseFloat($(this).data('product-price'));
-      total += itemQty * itemPrice;
-    });
-    $('#total').text(total.toFixed(2));
-  }
-
-  // Delete Button
-  $(document).on('click', '.delete-button', function(e){
-    e.preventDefault();
-
-    $.ajax({
-      type: 'POST',
-      url: '{% url "cart-delete" %}',
-      data: {
-        product_id: $(this).data('index'),
-        csrfmiddlewaretoken: "{{csrf_token}}",
-        action: 'post'
-      },
-      success: function(json){
-        location.reload(true);
-        document.getElementById("cart-qty").textContent = json.qty;
-        document.getElementById("total").textContent = json.total;
-      },
-      error: function(xhr, errmsg, err){
-        console.log(xhr.status + ": " + xhr.responseText);
-      }
-    });
-  });
-
-  // Quantity Selector Logic with optimized debounce
-  $(document).ready(function() {
-    let debounceTimeout = null;
-
-    function sendUpdate(productId, qty) {
-      console.log('Sending AJAX: product_id=', productId, 'new_qty=', qty);
-      $.ajax({
-        type: 'POST',
-        url: '{% url "cart-update" %}',
-        data: {
-          product_id: productId,
-          product_quantity: qty,
-          csrfmiddlewaretoken: "{{csrf_token}}",
-          action: 'post'
-        },
-        success: function(json) {
-          if (json.success) {
-            var newStock = json.new_stock;
-            $('.product-item[data-product-id="' + productId + '"]').attr('data-product-stock', newStock);
-            console.log('AJAX Success: Stock updated to:', newStock, 'Cart qty:', qty);
-          } else {
-            console.log('AJAX Failed:', json.message);
-          }
-        },
-        error: function(xhr, errmsg, err) {
-          console.log('AJAX Error:', xhr.status + ": " + xhr.responseText);
-        }
-      });
+        // Recalculate total
+        var total = 0;
+        $('.product-item').each(function() {
+            var itemQty = parseInt($(this).find('input[id^="qty_"]').val());
+            var itemPrice = parseFloat($(this).data('product-price'));
+            total += itemQty * itemPrice;
+        });
+        $('#total').text(total.toFixed(2));
     }
 
-    $('.qty-minus, .qty-plus').click(function() {
-      var productId = $(this).data('product-id');
-      var qtyInput = $('#qty_' + productId);
-      var qty = parseInt(qtyInput.val());
-      var currentStock = parseInt($('[data-product-id="' + productId + '"]').attr('data-product-stock')) || 0;
-      var totalStock = parseInt($('[data-product-id="' + productId + '"]').attr('data-total-stock')) || currentStock + qty;
-      var maxStock = totalStock;  // Cap at total stock
+    // New: Function to toggle Proceed to Checkout button state
+    function toggleCheckoutButton() {
+        var cartQty = parseInt(document.getElementById("cart-qty") ? document.getElementById("cart-qty").textContent : '{{ cart_quantity }}') || 0;
+        var proceedButton = $('#proceed-checkout');
+        var emptyCartMessage = $('#empty-cart-message');
 
-      console.log('Clicked:', $(this).hasClass('qty-minus') ? 'Minus' : 'Plus', 'Current qty:', qty, 'Current stock:', currentStock, 'Max stock:', maxStock);
+        if (cartQty === 0) {
+            proceedButton.addClass('disabled').attr('aria-disabled', 'true');
+            emptyCartMessage.show();
+        } else {
+            proceedButton.removeClass('disabled').removeAttr('aria-disabled');
+            emptyCartMessage.hide();
+        }
+    }
 
-      if ($(this).hasClass('qty-minus') && qty > 1) {
-        qty -= 1;
-      } else if ($(this).hasClass('qty-plus') && qty < maxStock) {
-        qty += 1;
-      } else {
-        console.log('No change: qty at min/max', qty, 'Max stock:', maxStock);
-        return;
-      }
+    // Delete Button
+    $(document).on('click', '.delete-button', function(e) {
+        e.preventDefault();
 
-      qtyInput.val(qty);
-      updatePriceAndTotal(productId, qty);
-
-      console.log('Preparing AJAX: product_id=', productId, 'new_qty=', qty);
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(function() {
-        sendUpdate(productId, qty);
-      }, 300);  // 300ms debounce for rapid clicks
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart-delete" %}',
+            data: {
+                product_id: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload(true);
+                document.getElementById("cart-qty").textContent = json.qty;
+                document.getElementById("total").textContent = json.total;
+                toggleCheckoutButton(); // Update button state after delete
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
     });
-  });
 
- </script>
+    // Quantity Selector Logic with optimized debounce
+    $(document).ready(function() {
+        let debounceTimeout = null;
+
+        function sendUpdate(productId, qty) {
+            console.log('Sending AJAX: product_id=', productId, 'new_qty=', qty);
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart-update" %}',
+                data: {
+                    product_id: productId,
+                    product_quantity: qty,
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function(json) {
+                    if (json.success) {
+                        var newStock = json.new_stock;
+                        $('.product-item[data-product-id="' + productId + '"]').attr('data-product-stock', newStock);
+                        console.log('AJAX Success: Stock updated to:', newStock, 'Cart qty:', qty);
+                        document.getElementById("cart-qty").textContent = json.qty; // Update cart quantity
+                        document.getElementById("total").textContent = json.total; // Update total
+                        toggleCheckoutButton(); // Update button state after quantity change
+                    } else {
+                        console.log('AJAX Failed:', json.message);
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log('AJAX Error:', xhr.status + ": " + xhr.responseText);
+                }
+            });
+        }
+
+        $('.qty-minus, .qty-plus').click(function() {
+            var productId = $(this).data('product-id');
+            var qtyInput = $('#qty_' + productId);
+            var qty = parseInt(qtyInput.val());
+            var currentStock = parseInt($('[data-product-id="' + productId + '"]').attr('data-product-stock')) || 0;
+            var totalStock = parseInt($('[data-product-id="' + productId + '"]').attr('data-total-stock')) || currentStock + qty;
+            var maxStock = totalStock;  // Cap at total stock
+
+            console.log('Clicked:', $(this).hasClass('qty-minus') ? 'Minus' : 'Plus', 'Current qty:', qty, 'Current stock:', currentStock, 'Max stock:', maxStock);
+
+            if ($(this).hasClass('qty-minus') && qty > 1) {
+                qty -= 1;
+            } else if ($(this).hasClass('qty-plus') && qty < maxStock) {
+                qty += 1;
+            } else {
+                console.log('No change: qty at min/max', qty, 'Max stock:', maxStock);
+                return;
+            }
+
+            qtyInput.val(qty);
+            updatePriceAndTotal(productId, qty);
+
+            console.log('Preparing AJAX: product_id=', productId, 'new_qty=', qty);
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(function() {
+                sendUpdate(productId, qty);
+            }, 300);  // 300ms debounce for rapid clicks
+        });
+
+        // Initial toggle of Proceed to Checkout button
+        toggleCheckoutButton();
+    });
+</script>
 
 {% endblock %}

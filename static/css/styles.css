@@ -98,7 +98,8 @@
 }
 
 .card.shadow-sm .card-body .card-text {
-    margin: 0; /* Remove default margins on <p> to ensure consistent title placement */
+ 
+   margin: 0; /* Remove default margins on <p> to ensure consistent title placement */
 }
 
 .card.shadow-sm .card-body .stock-info {
@@ -164,8 +165,8 @@
         justify-content: center; /* Ensure centered on larger screens */
     }
     .album {
-        width: 80%; /* Matches .centered-image img’s 80% width */
-        max-width: 90%; /* Match your working version for centering */
+        width: 80%;
+        max-width: 90%;
         margin: 0 auto; /* Centers the container */
         padding: 0; /* Remove padding to prevent right gap */
         box-sizing: border-box; /* Ensures padding is included in the width */
@@ -184,39 +185,8 @@ body {
     text-align: center;
 }
 
-.centered-image {
-    text-align: center;
-    width: 100vw; /* Ensure the container is full viewport width, restoring your working setup */
-    max-width: 100%; /* Ensure it doesn't exceed viewport width */
-    padding: 0; /* Remove any padding */
-    margin: 0 auto; /* Ensure centered */
-}
-
-.centered-image img {
-    width: 100%; /* Full width of its container, but maintain centering */
-    height: auto; /* Keeps aspect ratio */
-    display: block; /* Ensures it behaves as a block element */
-    margin: 0 auto; /* Centers the image */
-}
-
-/* For mobile devices */
-@media (max-width: 767px) {
-    .centered-image img {
-        box-sizing: border-box; /* Ensure padding is included in the width */
-    }
-    .album {
-        width: 100%; /* Full width on small screens */
-        padding: 0; /* Remove padding to prevent right gap */
-        box-sizing: border-box; /* Ensures padding is included in the width */
-        margin: 0 auto; /* Ensure centered on mobile */
-    }
-    .album .row {
-        justify-content: center; /* Center the content within the row for mobile */
-    }
-}
-
 .right-image {
-    width: 360px; /* Default for large screens */
+    width: 300px; /* Default for large screens */
     height: auto;
     float: right;
     margin: 0 0 10px 10px;
@@ -231,13 +201,19 @@ body {
         float: right; /* Stays floated right */
         margin: 0 0 10px 10px; /* Keeps spacing */
     }
+    .album {
+        width: 100%; /* Full width on small screens */
+        padding: 0; /* Remove padding to prevent right gap */
+        box-sizing: border-box; /* Ensures padding is included in the width */
+        margin: 0 auto; /* Ensure centered on mobile */
+    }
+    .album .row {
+        justify-content: center; /* Center the content within the row for mobile */
+    }
 }
 
 /* For larger screens like laptops */
 @media (min-width: 768px) {
-    .centered-image img {
-        width: 40%; /* Ensure full width within 80% for larger screens, maintaining centering */
-    }
     .album {
         max-width: 90%; /* This allows for some margin on larger screens */
         margin: 0 auto; /* Centers the container */
@@ -440,5 +416,23 @@ body::before {
         margin-left: auto;
         margin-right: auto;
         display: block;
+    }
+}
+
+.left-image {
+    width: 250px; /* Default for large screens */
+    height: auto;
+    float: left;
+    margin: 10px 10px 10px 10px;
+}
+
+@media (max-width: 767px) {
+    .left-image {
+        width: 100%; /* Scales to container width on mobile */
+        max-width: 200px; /* Optional: caps it at 200px so it’s not too big */
+        min-width: 230px;
+        height: auto; /* Keeps aspect ratio */
+        float: left; /* Stays floated right */
+        margin: 10px 10px 10px 10px; /* Keeps spacing */
     }
 }
