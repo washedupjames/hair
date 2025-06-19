@@ -139,6 +139,16 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Enter your app password
 HOST_EMAIL = env('EMAIL_HOST_USER')
 
 # Database
+
+DATABASES = {
+
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -149,6 +159,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 
 # AWS configuration
@@ -168,3 +179,4 @@ STORAGES = {
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE = False
 
+"""

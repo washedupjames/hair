@@ -186,7 +186,7 @@ body {
 }
 
 .right-image {
-    width: 300px; /* Default for large screens */
+    width: 400px; /* Default for large screens */
     height: auto;
     float: right;
     margin: 0 0 10px 10px;
@@ -420,19 +420,35 @@ body::before {
 }
 
 .left-image {
-    width: 250px; /* Default for large screens */
-    height: auto;
+    width: 350px !important; /* Test size for large screens */
+    height: auto !important;
     float: left;
-    margin: 10px 10px 10px 10px;
+    margin: 10px !important;
 }
 
 @media (max-width: 767px) {
     .left-image {
-        width: 100%; /* Scales to container width on mobile */
-        max-width: 200px; /* Optional: caps it at 200px so it’s not too big */
-        min-width: 230px;
-        height: auto; /* Keeps aspect ratio */
-        float: left; /* Stays floated right */
-        margin: 10px 10px 10px 10px; /* Keeps spacing */
+        width: 195px !important; /* Test size for mobile */
+        max-width: none !important; /* Remove cap for clarity */
+        height: auto !important;
+        float: left;
+        margin: 10px !important;
+    }
+}
+.spaced-paragraph {
+    margin-bottom: 100px; /* ~5 <br> tags on desktop */
+}
+@media (max-width: 768px) {
+    .spaced-paragraph {
+        margin-bottom: 20px; /* 1 <br> on mobile */
+    }
+}
+.clear-image {
+    clear: both;
+    margin-top: 150px; /* For desktop/large screens */
+}
+@media (max-width: 768px) {
+    .clear-image {
+        margin-top: 50px; /* Reduced gap on mobile */
     }
 }
