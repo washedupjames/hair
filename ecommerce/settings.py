@@ -139,7 +139,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Enter your app password
 HOST_EMAIL = env('EMAIL_HOST_USER')
 
 # Database
-
+"""
 DATABASES = {
 
     'default': {
@@ -149,6 +149,7 @@ DATABASES = {
 }
 
 """
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -179,4 +180,4 @@ STORAGES = {
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE = False
 
-"""
+
